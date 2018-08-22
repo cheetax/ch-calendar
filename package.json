@@ -1,6 +1,6 @@
 {
-  "name": "material-inputfield",
-  "version": "0.2.01",
+  "name": "ch-calendar",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -10,19 +10,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cheetax/md-inputfield.git"
+    "url": "git+https://github.com/cheetax/ch-calendar.git"
   },
   "keywords": [
-    "input",
-    "react",
-    "material"
+    "calendar",
+    "react"
   ],
   "author": "cheetax",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cheetax/md-inputfield/issues"
+    "url": "https://github.com/cheetax/ch-calendar"
   },
-  "homepage": "https://github.com/cheetax/md-inputfield#readme",
+  "homepage": "https://github.com/cheetax/ch-calendar#readme",
   "peerDependencies": {
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
@@ -49,10 +48,10 @@
     "react-dom": "^16.4.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
-    "webpack": "^4.16.5",
-    "webpack-cli": "^3.1.0"
+    "webpack": "^4.16.5"
   },
   "dependencies": {
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",    
+    "moment": "^2.22.2"
   }
 }
