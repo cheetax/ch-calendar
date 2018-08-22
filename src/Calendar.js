@@ -17,7 +17,7 @@ class Calendar extends Component {
 
   constructor(props) {
     super(props)
-    var data = moment(props.data, ["DD-MM-YYYY"], 'ru');
+    var data = moment(props.date, ["DD-MM-YYYY"], 'ru');
     
     this.state = {
       calendar: {
@@ -120,8 +120,7 @@ class Calendar extends Component {
   }
 
   componentWillMount() {
-    //this._fillMonthArray()
-    //console.log(monthArray);
+    
   }
 
   componentDidUpdate(prevProps) {
@@ -134,7 +133,7 @@ class Calendar extends Component {
       dayweek[i] = moment().day(i + 1).format('dd');
     }
     return (
-      <div style={{ justifyContent: 'space-between', textTransform: 'capitalize' }} className='flex-row' >
+      <div style={{ justifyContent: 'space-between', textTransform: 'capitalize' }} className='calendar-flex-row' >
         {
           dayweek.map((day, i) => <span key={i} style={{ height: 32, width: 32, margin: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', }} >{day}</span>)
         }
@@ -181,125 +180,9 @@ class Calendar extends Component {
     }
     return arrayMonth;
   }
-
-  modalSelectYear = () => {
-    return (
-      <div >
-        <div style={this.state.openModalSelectYear ? {
-          position: 'fixed',
-          background: 'transparen',
-          opacity: '0.00',
-          top: '0px',
-          left: '0px',
-          width: '100%',
-          height: '100%',
-          zIndex: '999',
-        } : null}
-          onClick={() => {
-            this.setState({ openModalSelectYear: false })
-          }} />
-        <div id='modal1' className='modal-dropdown' style={this.state.openModalSelectYear ? {
-          display: 'block',
-          opacity: '1',
-          padding: '8px 0px'
-        } : null} >
-          <div className='dropdown-menu' >
-            {this._fillSelectYear(this.state.calendar.year).map(year => <a className='dropdown-item' onClick={() => {
-              this.setState({
-                openModalSelectYear: false,
-                calendar: {
-                  ...this.state.calendar,
-                  year
-                }
-              })
-
-            }} >{year}</a>)}
-          </div>
-
-        </div>
-      </div>
-    )
-  }
-
-  modalSelectMonth = () => {
-    return (
-      <div >
-        <div style={this.state.openModalSelectMonth ? {
-          position: 'fixed',
-          background: 'transparen',
-          opacity: '0.00',
-          top: '0px',
-          left: '0px',
-          width: '100%',
-          height: '100%',
-          zIndex: '999',
-        } : null}
-          onClick={() => {
-            this.setState({ openModalSelectMonth: false })
-          }} />
-        <div id='modal1' className='modal-dropdown' style={this.state.openModalSelectMonth ? {
-          display: 'block',
-          opacity: '1',
-          padding: '8px 0px'
-        } : null} >
-          <div className='dropdown-menu' style={{ height: 200, overflow: 'auto' }} >
-            {this._fillSelectMonth().map((month, m) => <a className='dropdown-item' onClick={() => {
-              this.setState({
-                openModalSelectMonth: false,
-                calendar: {
-                  ...this.state.calendar,
-                  month: m
-                }
-              })
-
-            }} >{month}</a>)}
-          </div>
-
-        </div>
-      </div>
-    )
-  }
-
-  _selectYear = (year) => <div className={(this.state.openModalSelectMonth) ? 'flex-row not-year' : 'flex-row select-year'} >
-    <div
-      style={{
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'center',
-        alignSelf: 'stretch',
-        alignItems: 'center',
-        margin: 1
-      }} >
-      {year}
-    </div>
-    <div style={{ position: 'relative' }} >
-      <a
-        className='btn-select-day'
-        onClick={() => this.setState({ openModalSelectYear: true })}
-        style={{
-          height: 32,
-          width: 32,
-          margin: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          //fontSize: 20,
-        }} >
-        <svg xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          className={(this.state.openModalSelectYear) ? "icon-down-arrow dropdown-active" : "icon-down-arrow"}>
-          <path d="M7 10l5 5 5-5z" />
-        </svg>
-      </a>
-      {this.modalSelectYear(this)}
-    </div>
-  </div>
-
-
+  
   _selectMonth = (calendar) => {
-    return (<div className="flex-row"
+    return (<div className="calendar-flex-row"
       style={{
         display: 'flex',
         flex: 3,
@@ -322,7 +205,7 @@ class Calendar extends Component {
           <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
         </svg>
       </a>
-      <div className='flex-row' style={{ flex: 'auto' }} >
+      <div className='calendar-flex-row' style={{ flex: 'auto' }} >
         <div style={
           {
             display: 'flex',
@@ -381,9 +264,9 @@ class Calendar extends Component {
   }
 
   _selectDay = (calendar, arr, data) => <div style={{ overflow: 'hidden' }} className={(this.state.openModalSelectMonth) ? 'off-select-day' : 'on-select-day'}>
-    <div className='flex-column' >
+    <div className='calendar-flex-column' >
       {this.dayweek()}
-      {arr.map((week, wi) => <div key={wi} style={{ justifyContent: 'space-between' }} className='flex-row' >
+      {arr.map((week, wi) => <div key={wi} style={{ justifyContent: 'space-between' }} className='calendar-flex-row' >
         {week.map((day, di) =>
           <a key={di}
             className={(moment(data).isSame(day.data)) ? day.month !== calendar.month ? 'btn-select-day no-current-month active' : 'btn-select-day active' : (day.current) ? 'btn-select-day current' : day.month !== calendar.month ? 'btn-select-day no-current-month' : 'btn-select-day'}
@@ -407,8 +290,8 @@ class Calendar extends Component {
   </div>
 
   _selectMonths = (arr, month) => <div style={{ overflow: 'hidden' }} className={(this.state.openModalSelectMonth) ? 'on-select-month' : 'off-select-month'}>
-    <div className='flex-column' >
-      {arr.map((row, ri) => <div key={ri} style={{ justifyContent: 'space-around' }} className='flex-row' >
+    <div className='calendar-flex-column' >
+      {arr.map((row, ri) => <div key={ri} style={{ justifyContent: 'space-around' }} className='calendar-flex-row' >
         {row.map((col, ci) =>
           <a key={ci}
             className={(moment(month).isSame(col.m)) ? 'btn-select-day active' : (col.current) ? 'btn-select-day current' : 'btn-select-day'}
@@ -419,8 +302,8 @@ class Calendar extends Component {
               justifyContent: 'center',
               alignItems: 'center',
               //flex: '1',
-              height: 57.5,
-              width: 57.5,
+              height: 59.5,
+              width: 59.5,
               //fontSize: 20,
               //opacity: day.month !== calendar.month ? '.4' : '1'
             }} >
@@ -443,20 +326,20 @@ class Calendar extends Component {
 
     return (
       <div ref={this._ref} style={{
-        display: (isActive) ? 'block' : 'none'
+        display: (isActive) ? 'inline-block' : 'none',
       }}  >
         <div  style={{
           justifyContent: 'space-between',
           //fontSize: 20,
           border: '1px solid #e0e0e0'
         }}
-          className="flex-column">
-          <div style={{ borderBottom: '1px solid #e0e0e0', alignItems: 'center', textTransform: 'capitalize' }} className="flex-row">
+          className="calendar-flex-column">
+          <div style={{ borderBottom: '1px solid #e0e0e0', alignItems: 'center', textTransform: 'capitalize' }} className="calendar-flex-row">
 
             {this._selectMonth(calendar)}
             {/* {this._selectYear(calendar.year)} */}
           </div>
-          <div style={{ height: 238, overflow: 'hidden' }} >
+          <div style={{ height: 262, overflow: 'hidden' }} >
             {this._selectMonths(arrMonth, calendar.month)}
             {this._selectDay(calendar, arrDay, data)}
           </div>
@@ -466,7 +349,7 @@ class Calendar extends Component {
 
     );
     // return (
-    //   <div style={{ width: 170, position: 'relative', overflow: 'hidden' }} className='flex-row' >
+    //   <div style={{ width: 170, position: 'relative', overflow: 'hidden' }} className='calendar-flex-row' >
     //     <div style={{ width: '100%', display: 'flex', background: 'green' }} >
     //       <div style={{ height: 50 }} />
     //     </div>

@@ -1,6 +1,6 @@
 {
   "name": "ch-calendar",
-  "version": "0.0.1",
+  "version": "0.9.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -48,10 +48,11 @@
     "react-dom": "^16.4.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
-    "webpack": "^4.16.5"
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
   },
   "dependencies": {
-    "react-scripts": "1.1.4",    
+    "react-scripts": "1.1.4",
     "moment": "^2.22.2"
   }
 }
