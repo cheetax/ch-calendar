@@ -18,16 +18,17 @@ class Calendar extends Component {
   constructor(props) {
     super(props)
     var data = moment(props.date, ["DD-MM-YYYY"], 'ru');
-    
+    console.log(props.isMonth)
     this.state = {
       calendar: {
         year: moment(data).year(),
         month: moment(data).month(),
         monthArray: [],
       },
+      isMonth: props.isMonth || false,
       data,
       openModalSelectYear: false,
-      openModalSelectMonth: false,
+      openModalSelectMonth: props.isMonth || false,
       isActive: props.isActive || true,
       toClose: (props.toClose === undefined) ? true : props.toClose,
     }
@@ -120,7 +121,7 @@ class Calendar extends Component {
   }
 
   componentWillMount() {
-    
+
   }
 
   componentDidUpdate(prevProps) {
@@ -154,14 +155,21 @@ class Calendar extends Component {
   _onClickMonth = (month) => {
     //event.preventDefault();
     var calendar = this.state.calendar;
-    var openModalSelectMonth = !this.state.openModalSelectMonth
+    var data = this.state.data;
+    var openModalSelectMonth = this.state.openModalSelectMonth 
     calendar.month = month;
+    if (!this.props.isMonth) {      
+      openModalSelectMonth = false;   
+    }
+    else {
+      data = moment({day: data.date(), month, year: calendar.year })
+      if (this.props.onSelect) this.props.onSelect(new Date(data.format()))
+    }
     this.setState({
       openModalSelectMonth,
       calendar,
+      data,
     })
-    console.log()
-
   }
 
   _fillSelectYear = (year) => {
@@ -180,7 +188,7 @@ class Calendar extends Component {
     }
     return arrayMonth;
   }
-  
+
   _selectMonth = (calendar) => {
     return (<div className="calendar-flex-row"
       style={{
@@ -323,12 +331,11 @@ class Calendar extends Component {
     const arrMonth = this._fillMonthArray();
     const data = this.state.data;
     const isActive = this.state.isActive;
-
     return (
       <div ref={this._ref} style={{
         display: (isActive) ? 'inline-block' : 'none',
       }}  >
-        <div  style={{
+        <div style={{
           justifyContent: 'space-between',
           //fontSize: 20,
           border: '1px solid #e0e0e0'
@@ -348,18 +355,6 @@ class Calendar extends Component {
       </div>
 
     );
-    // return (
-    //   <div style={{ width: 170, position: 'relative', overflow: 'hidden' }} className='calendar-flex-row' >
-    //     <div style={{ width: '100%', display: 'flex', background: 'green' }} >
-    //       <div style={{ height: 50 }} />
-    //     </div>
-    //     <div className='test2' style={{ }} >
-    //       <div className='test' style={{ width: 50, height: 50, background: 'red'  }} />
-    //     </div>
-    //   </div>
-
-    // )
   }
 }
-//export default connect(mapStateToProps)(LoginPage);
 export default Calendar;
