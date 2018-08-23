@@ -17,8 +17,8 @@ class Calendar extends Component {
 
   constructor(props) {
     super(props)
-    var data = moment(props.date, ["DD-MM-YYYY"], 'ru');
-    console.log(props.isMonth)
+    var data = moment(props.date, 'ru').startOf('day');
+
     this.state = {
       calendar: {
         year: moment(data).year(),
@@ -32,6 +32,7 @@ class Calendar extends Component {
       isActive: props.isActive || true,
       toClose: (props.toClose === undefined) ? true : props.toClose,
     }
+    console.log(this.state)
     this._fillDayArray = this._fillDayArray.bind(this);
     this._upMonth = this._upMonth.bind(this);
     //console.log(moment(props.data).day())
@@ -53,7 +54,7 @@ class Calendar extends Component {
           data: moment(month).weekday((week * 7) + (day)),
           day: moment(month).weekday((week * 7) + (day)).date(),
           month: moment(month).weekday((week * 7) + (day)).month(),
-          current: current,
+          current,
         }
       }
     }
@@ -124,7 +125,31 @@ class Calendar extends Component {
 
   }
 
-  componentDidUpdate(prevProps) {
+  componentWillUpdate(nextProps) {
+    var isActive = this.state.isActive;
+    var data = this.state.data;
+    if (nextProps.isActive === undefined && !this.state.isActive) {
+      isActive = true;
+      this.setState({ isActive })
+    }
+    else if (nextProps.isActive !== this.state.isActive && nextProps.isActive !== undefined) {
+      isActive = nextProps.isActive;
+      this.setState({ isActive })
+    }
+    if (nextProps.date !== undefined) {
+      var _date = moment(nextProps.date).startOf('day')
+      if (!moment(_date).isSame(data)) {
+        data = _date;
+        this.setState({
+          data,
+          calendar: {
+            year: moment(data).year(),
+            month: moment(data).month(),
+            monthArray: [],
+          }
+        })
+      }
+    }
 
   }
 
@@ -144,25 +169,27 @@ class Calendar extends Component {
   _onClick = (data) => {
     //event.preventDefault();
     var toClose = this.state.toClose;
+
     this.setState({
       data,
       isActive: toClose ? false : true,
     })
-
-    if (this.props.onSelect) this.props.onSelect(new Date(data.format()))
+    //console.log(data.format());
+    var _data = data.format();
+    if (this.props.onSelect) this.props.onSelect(new Date(_data))
   }
 
   _onClickMonth = (month) => {
     //event.preventDefault();
     var calendar = this.state.calendar;
     var data = this.state.data;
-    var openModalSelectMonth = this.state.openModalSelectMonth 
+    var openModalSelectMonth = this.state.openModalSelectMonth
     calendar.month = month;
-    if (!this.props.isMonth) {      
-      openModalSelectMonth = false;   
+    if (!this.props.isMonth) {
+      openModalSelectMonth = false;
     }
     else {
-      data = moment({day: data.date(), month, year: calendar.year })
+      data = moment({ day: data.date(), month, year: calendar.year })
       if (this.props.onSelect) this.props.onSelect(new Date(data.format()))
     }
     this.setState({
@@ -271,13 +298,39 @@ class Calendar extends Component {
     </div>)
   }
 
+  _selectDayClass = ({ data, day, calendar }) => {
+    var result = 'btn-select-day ';
+    //console.log(data +' ' + day.data + " " + moment(data).isSame(day.data))
+    if (moment(data).isSame(day.data)) {
+      if (day.month !== calendar.month) {
+        result += 'no-current-month active'
+      }
+      else {
+        result += 'active'
+      }
+    }
+    else {
+      if (day.current) {
+        result += 'current';
+      }
+      else {
+        if (day.month !== calendar.month) {
+          result += 'no-current-month'
+        }
+      }
+    }
+    //console.log(result)
+    return result;
+  }
+
+
   _selectDay = (calendar, arr, data) => <div style={{ overflow: 'hidden' }} className={(this.state.openModalSelectMonth) ? 'off-select-day' : 'on-select-day'}>
     <div className='calendar-flex-column' >
       {this.dayweek()}
       {arr.map((week, wi) => <div key={wi} style={{ justifyContent: 'space-between' }} className='calendar-flex-row' >
         {week.map((day, di) =>
           <a key={di}
-            className={(moment(data).isSame(day.data)) ? day.month !== calendar.month ? 'btn-select-day no-current-month active' : 'btn-select-day active' : (day.current) ? 'btn-select-day current' : day.month !== calendar.month ? 'btn-select-day no-current-month' : 'btn-select-day'}
+            className={this._selectDayClass({ data, day, calendar })}
             onClick={() => this._onClick(day.data)}
             style={{
               height: 32,
@@ -331,6 +384,7 @@ class Calendar extends Component {
     const arrMonth = this._fillMonthArray();
     const data = this.state.data;
     const isActive = this.state.isActive;
+    //console.log('calendar -' + isActive)
     return (
       <div ref={this._ref} style={{
         display: (isActive) ? 'inline-block' : 'none',
