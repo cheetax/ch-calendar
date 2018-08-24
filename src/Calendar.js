@@ -127,6 +127,7 @@ class Calendar extends Component {
     var currentDate = moment().startOf('day');
     var month = moment(currentDate).month();
     var year = moment(currentDate).year();
+    console.log('month - ' + month )
     this.setState({
       calendar: {
         year,
