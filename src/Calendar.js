@@ -101,6 +101,8 @@ class Calendar extends Component {
     })
   }
 
+
+
   _downMonth = () => {
     var month = this.state.calendar.month;
     var year = this.state.calendar.year;
@@ -118,6 +120,19 @@ class Calendar extends Component {
         month,
         year,
       }
+    })
+  }
+
+  _currentDay = () => {
+    var currentDate = moment().startOf('day');
+    this.setState({
+      calendar: {
+        year: moment(currentDate).year(),
+        month: moment(currentDate).month(),
+        monthArray: [],
+      },
+      data: currentDate,
+      currentValue: currentDate.format('DD-MM-YYYY')
     })
   }
 
@@ -174,7 +189,7 @@ class Calendar extends Component {
       data,
       isActive: toClose ? false : true,
     })
-    //console.log(data.format());
+    console.log(data.format());
     var _data = data.format();
     if (this.props.onSelect) this.props.onSelect(new Date(_data))
   }
@@ -224,6 +239,22 @@ class Calendar extends Component {
         justifyContent: 'space-between',
         alignItems: 'center'
       }} >
+      <a
+        className='btn-select-day'
+        onClick={this._currentDay}
+        style={{
+          height: 32,
+          width: 32,
+          margin: 1,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+          //fontSize: 20,
+        }}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M5 15H3v4c0 1.1.9 2 2 2h4v-2H5v-4zM5 5h4V3H5c-1.1 0-2 .9-2 2v4h2V5zm14-2h-4v2h4v4h2V5c0-1.1-.9-2-2-2zm0 16h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
+        </svg>
+      </a>
       <a
         className='btn-select-day'
         onClick={this._downMonth}
@@ -323,7 +354,6 @@ class Calendar extends Component {
     return result;
   }
 
-
   _selectDay = (calendar, arr, data) => <div style={{ overflow: 'hidden' }} className={(this.state.openModalSelectMonth) ? 'off-select-day' : 'on-select-day'}>
     <div className='calendar-flex-column' >
       {this.dayweek()}
@@ -331,7 +361,10 @@ class Calendar extends Component {
         {week.map((day, di) =>
           <a key={di}
             className={this._selectDayClass({ data, day, calendar })}
-            onClick={() => this._onClick(day.data)}
+            onClick={() => {
+            console.log('select day - ' + day.data)
+              return this._onClick(day.data)
+            }}
             style={{
               height: 32,
               width: 32,
@@ -396,9 +429,7 @@ class Calendar extends Component {
         }}
           className="calendar-flex-column">
           <div style={{ borderBottom: '1px solid #e0e0e0', alignItems: 'center', textTransform: 'capitalize' }} className="calendar-flex-row">
-
             {this._selectMonth(calendar)}
-            {/* {this._selectYear(calendar.year)} */}
           </div>
           <div style={{ height: 262, overflow: 'hidden' }} >
             {this._selectMonths(arrMonth, calendar.month)}
