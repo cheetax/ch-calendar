@@ -125,10 +125,12 @@ class Calendar extends Component {
 
   _currentDay = () => {
     var currentDate = moment().startOf('day');
+    var month = moment(currentDate).month();
+    var year = moment(currentDate).year();
     this.setState({
       calendar: {
-        year: moment(currentDate).year(),
-        month: moment(currentDate).month(),
+        year,
+        month,
         monthArray: [],
       },
       data: currentDate,
