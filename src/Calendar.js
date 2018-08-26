@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
 import moment from 'moment';
 import 'moment/locale/ru';
-import './Calendar.css'
+import React, { Component } from 'react';
+import './Calendar.css';
 
 moment.locale('ru');
 
@@ -26,20 +26,16 @@ class Calendar extends Component {
         monthArray: [],
       },
       isMonth: props.isMonth || false,
+      defaultDate: data,
       data,
-      openModalSelectYear: false,
       openModalSelectMonth: props.isMonth || false,
       isActive: props.isActive || true,
       toClose: (props.toClose === undefined) ? true : props.toClose,
     }
-    console.log(this.state)
+    //console.log(this.state)
     this._fillDayArray = this._fillDayArray.bind(this);
     this._upMonth = this._upMonth.bind(this);
     //console.log(moment(props.data).day())
-  }
-
-  _ref = (e) => {
-
   }
 
   _fillDayArray = () => {
@@ -56,6 +52,7 @@ class Calendar extends Component {
           month: moment(month).weekday((week * 7) + (day)).month(),
           current,
         }
+        //console.log(monthArray[week][day])
       }
     }
     return monthArray;
@@ -127,7 +124,7 @@ class Calendar extends Component {
     var currentDate = moment().startOf('day');
     var month = moment(currentDate).month();
     var year = moment(currentDate).year();
-    console.log('month - ' + month )
+    //console.log('month - ' + month )
     this.setState({
       calendar: {
         year,
@@ -145,7 +142,7 @@ class Calendar extends Component {
 
   componentWillUpdate(nextProps) {
     var isActive = this.state.isActive;
-    var data = this.state.data;
+    var data = this.state.defaultDate;
     if (nextProps.isActive === undefined && !this.state.isActive) {
       isActive = true;
       this.setState({ isActive })
@@ -155,11 +152,13 @@ class Calendar extends Component {
       this.setState({ isActive })
     }
     if (nextProps.date !== undefined) {
+      //console.log(nextProps.date)
       var _date = moment(nextProps.date).startOf('day')
       if (!moment(_date).isSame(data)) {
-        data = _date;
+        data = moment(_date);
         this.setState({
           data,
+          defaultDate: data,
           calendar: {
             year: moment(data).year(),
             month: moment(data).month(),
@@ -192,7 +191,7 @@ class Calendar extends Component {
       data,
       isActive: toClose ? false : true,
     })
-    console.log(data.format());
+    //console.log(data.format());
     var _data = data.format();
     if (this.props.onSelect) this.props.onSelect(new Date(_data))
   }
@@ -215,15 +214,6 @@ class Calendar extends Component {
       calendar,
       data,
     })
-  }
-
-  _fillSelectYear = (year) => {
-    return [
-      year - 2,
-      year - 1,
-      year,
-      year + 1
-    ]
   }
 
   _fillSelectMonth = () => {
@@ -334,7 +324,6 @@ class Calendar extends Component {
 
   _selectDayClass = ({ data, day, calendar }) => {
     var result = 'btn-select-day ';
-    //console.log(data +' ' + day.data + " " + moment(data).isSame(day.data))
     if (moment(data).isSame(day.data)) {
       if (day.month !== calendar.month) {
         result += 'no-current-month active'
@@ -365,7 +354,7 @@ class Calendar extends Component {
           <a key={di}
             className={this._selectDayClass({ data, day, calendar })}
             onClick={() => {
-            console.log('select day - ' + day.data)
+              //console.log('select day - ' + day.data)
               return this._onClick(day.data)
             }}
             style={{
@@ -375,8 +364,6 @@ class Calendar extends Component {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              //fontSize: 20,
-              //opacity: day.month !== calendar.month ? '.4' : '1'
             }} >
             {day.day}
           </a>
@@ -398,11 +385,8 @@ class Calendar extends Component {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              //flex: '1',
               height: 59.5,
               width: 59.5,
-              //fontSize: 20,
-              //opacity: day.month !== calendar.month ? '.4' : '1'
             }} >
             {col.month}
           </a>
@@ -414,15 +398,15 @@ class Calendar extends Component {
 
 
   render() {
-    const calendar = this.state.calendar;
-    //const arr = calendar.monthArray;
+    const {
+      calendar,
+      data,
+      isActive } = this.state;
     const arrDay = this._fillDayArray();
     const arrMonth = this._fillMonthArray();
-    const data = this.state.data;
-    const isActive = this.state.isActive;
     //console.log('calendar -' + isActive)
     return (
-      <div ref={this._ref} style={{
+      <div style={{
         display: (isActive) ? 'inline-block' : 'none',
       }}  >
         <div style={{
