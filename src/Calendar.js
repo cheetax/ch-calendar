@@ -207,7 +207,7 @@ class Calendar extends Component {
     }
     else {
       data = moment({ day: data.date(), month, year: calendar.year })
-      if (this.props.onSelect) this.props.onSelect(new Date(data.format()))
+      if (this.props.onSelect) this.props.onSelect(new Date(data.format())) 
     }
     this.setState({
       openModalSelectMonth,
