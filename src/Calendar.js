@@ -184,21 +184,13 @@ class Calendar extends Component {
     }
     else {
       date = moment({ day: date.date(), month, year: calendar.year })
-      if (this.props.onSelect) this.props.onSelect(new Date(date.format()))
+      this.props.onSelect && this.props.onSelect(new Date(date.format()))
     }
     this.setState({
       openModalSelectMonth,
       calendar,
       date,
     })
-  }
-
-  _fillSelectMonth = () => {
-    var arrayMonth = [];
-    for (var m = 0; m <= 11; m++) {
-      arrayMonth.push(moment().month(m).format('MMMM'));
-    }
-    return arrayMonth;
   }
 
   _selectMonth = (calendar) => {
@@ -371,8 +363,6 @@ class Calendar extends Component {
       )}
     </div>
   </div>
-
-
 
   render() {
     const {
