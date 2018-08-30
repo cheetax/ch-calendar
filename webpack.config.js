@@ -1,4 +1,5 @@
 var path = require('path');
+const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   //entry: './src/index.js',
@@ -7,6 +8,10 @@ module.exports = {
     libraryTarget: 'commonjs2'
   },
   plugins: [
+    new webpack.ContextReplacementPlugin(
+      /moment[\/\\]locale$/,
+      /ru/
+    ),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
@@ -40,24 +45,12 @@ module.exports = {
           },
           "css-loader"
         ]
-      },
-      // {
-      //   test: /\.*css$/,
-      //   //include: path.resolve(__dirname, 'src'),
-      //   exclude: /(node_modules|bower_components|build)/,
-      //   use: ExtractTextPlugin.extract({
-      //     fallback: 'style-loader',
-      //     use: [
-      //       'css-loader',
-      //       'sass-loader'
-      //     ]
-      //   })
-      // }
+      },      
     ],
-    
+
   },
   //plugins: [htmlWebpackPlugin],
-  
+
   externals: {
     // Don't bundle react or react-dom
     react: {
@@ -71,6 +64,7 @@ module.exports = {
       commonjs2: "react-dom",
       amd: "ReactDOM",
       root: "ReactDOM"
-    }
+    },
+
   }
 };

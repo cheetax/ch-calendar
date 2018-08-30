@@ -1,5 +1,6 @@
 import moment from 'moment';
 import 'moment/locale/ru';
+import {Btn} from './Btn'
 import React, { Component } from 'react';
 import './Calendar.css';
 
@@ -201,38 +202,16 @@ class Calendar extends Component {
         justifyContent: 'space-between',
         alignItems: 'center'
       }} >
-      <a
-        className='btn-select-day'
-        onClick={this._currentDay}
-        style={{
-          height: 32,
-          width: 32,
-          margin: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-          //fontSize: 20,
-        }}>
+      <Btn onClick={this._currentDay}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path d="M5 15H3v4c0 1.1.9 2 2 2h4v-2H5v-4zM5 5h4V3H5c-1.1 0-2 .9-2 2v4h2V5zm14-2h-4v2h4v4h2V5c0-1.1-.9-2-2-2zm0 16h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
         </svg>
-      </a>
-      <a
-        className='btn-select-day'
-        onClick={this._downMonth}
-        style={{
-          height: 32,
-          width: 32,
-          margin: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-          //fontSize: 20,
-        }}>
+      </Btn>
+      <Btn onClick={this._downMonth}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='icon-svg' >
           <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
         </svg>
-      </a>
+      </Btn>
       <div className='calendar-flex-row' style={{ flex: 'auto' }} >
         <div style={
           {
@@ -248,18 +227,7 @@ class Calendar extends Component {
           {(this.state.openModalSelectMonth) ? calendar.year : moment().month(calendar.month).format('MMMM') + ' ' + calendar.year}
         </div>
         {(!this.state.openModalSelectMonth) ? <div style={{ position: 'relative', alignSelf: 'flex-end' }} >
-          <a
-            className='btn-select-day'
-            onClick={() => this.setState({ openModalSelectMonth: !this.state.openModalSelectMonth })}
-            style={{
-              height: 32,
-              width: 32,
-              margin: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              //fontSize: 20,
-            }} >
+          <Btn onClick={() => this.setState({ openModalSelectMonth: !this.state.openModalSelectMonth })}>
             <svg xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -267,32 +235,20 @@ class Calendar extends Component {
               className={(this.state.openModalSelectMonth) ? "icon-down-arrow dropdown-active" : "icon-down-arrow"}>
               <path d="M7 10l5 5 5-5z" />
             </svg>
-          </a>
+          </Btn>
           {/* {this.modalSelectMonth(this)} */}
         </div> : null}
       </div>
-
-      <a
-        className='btn-select-day'
-        onClick={this._upMonth}
-        style={{
-          height: 32,
-          width: 32,
-          margin: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          //fontSize: 20,
-        }} >
+      <Btn onClick={this._upMonth}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='icon-svg' >
           <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
         </svg>
-      </a>
+      </Btn>
     </div>)
   }
 
   _selectDayClass = ({ date, day, calendar }) => {
-    var result = 'btn-select-day ';
+    var result = '';
     if (moment(date).isSame(day.date)) {
       if (day.month !== calendar.month) {
         result += 'no-current-month active'
@@ -320,45 +276,32 @@ class Calendar extends Component {
       {this.dayweek()}
       {arr.map((week, wi) => <div key={wi} style={{ justifyContent: 'space-between' }} className='calendar-flex-row' >
         {week.map((day, di) =>
-          <a key={di}
+          <Btn _key={di}
             className={this._selectDayClass({ date, day, calendar })}
             onClick={() => {
               //console.log('select day - ' + day.date)
               return this._onClick(day.date)
-            }}
-            style={{
-              height: 32,
-              width: 32,
-              margin: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }} >
+            }}>
             {day.day}
-          </a>
+          </Btn>
         )}</div>
       )}
     </div>
-
   </div>
 
   _selectMonths = (arr, month) => <div style={{ overflow: 'hidden' }} className={(this.state.openModalSelectMonth) ? 'on-select-month' : 'off-select-month'}>
     <div className='calendar-flex-column' >
       {arr.map((row, ri) => <div key={ri} style={{ justifyContent: 'space-around' }} className='calendar-flex-row' >
         {row.map((col, ci) =>
-          <a key={ci}
+          <Btn _key={ci}
             className={(moment(month).isSame(col.m)) ? 'btn-select-day active' : (col.current) ? 'btn-select-day current' : 'btn-select-day'}
             onClick={() => this._onClickMonth(col.m)}
             style={{
-              margin: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
               height: 59.5,
               width: 59.5,
             }} >
             {col.month}
-          </a>
+          </Btn>
         )}</div>
       )}
     </div>
