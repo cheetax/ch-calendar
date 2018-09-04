@@ -1,6 +1,9 @@
 import moment from 'moment';
 import 'moment/locale/ru';
-import {Btn} from './Btn'
+import { Btn } from './Btn'
+import { ModalCalendar } from './ModalCalendar'
+import { BtnCalendar } from './BtnSpin'
+import {SvgCalendar} from './Svg'
 import React, { Component } from 'react';
 import './Calendar.css';
 
@@ -13,6 +16,8 @@ const matrixArray = (row, col) => {
   }
   return arr;
 }
+
+
 
 class Calendar extends Component {
 
@@ -28,10 +33,28 @@ class Calendar extends Component {
       isMonth: props.isMonth || false,
       date,
       openModalSelectMonth: props.isMonth || false,
+      openModalCalendar: false,
       isActive: props.isActive || true,
       toClose: (props.toClose === undefined) ? true : props.toClose,
     }
   }
+
+  _ModalCalendar = () => <div >
+    <ModalCalendar
+      date={this.state.date}
+      openModal={this.state.openModalCalendar}
+      onSelect={this._onSelectCalendar}
+      isMonth
+      onClick={() => {
+        this.setState({ openModalCalendar: false })
+      }} />
+  </div>
+
+  _btnCalendar = () => ((this.props.isModal) && <div style={{ position: 'relative', color: 'initial' }} >
+    {this._ModalCalendar()}
+    <BtnCalendar onClick={() => this._onClickBtnCalendar()}
+    ><SvgCalendar /></BtnCalendar>
+  </div>)
 
   _fillDayArray = () => {
     var month = moment({ year: this.state.calendar.year, month: this.state.calendar.month });
@@ -131,7 +154,7 @@ class Calendar extends Component {
     else if (nextProps.isActive !== this.state.isActive && nextProps.isActive !== undefined) {
       isActive = nextProps.isActive;
     }
-    this.setState({isActive})
+    this.setState({ isActive })
     if (nextProps.date !== undefined) {
       var _date = moment(nextProps.date).startOf('day')
       if (!moment(_date).isSame(date)) {
@@ -141,11 +164,11 @@ class Calendar extends Component {
           calendar: {
             year: moment(date).year(),
             month: moment(date).month(),
-          },          
+          },
         })
       }
     }
-    
+
   }
 
   dayweek = () => {
