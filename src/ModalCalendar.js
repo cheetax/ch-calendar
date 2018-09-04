@@ -1,5 +1,6 @@
 import React from 'react'
 import CalendarCore from './CalendarCore';
+import './Modal.css'
 //import 'ch-calendar/dist/ch-calendar.css';
 
 const ClassModal = (openModal) => (openModal) ? 'modal-dialog active' : 'modal-dialog'
@@ -8,7 +9,7 @@ export const ModalCalendar = (props) => {
     const { openModal, onClick } = props;
     
     return <div >
-        <div style={openModal ? {
+        <div style={(openModal && !!props.isButtonActive ) ? {
             position: 'fixed',
             background: 'black',
             opacity: '0',

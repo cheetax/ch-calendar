@@ -14,6 +14,11 @@ class Calendar extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+      this.setState({
+        openModalCalendar: !!nextProps.isActive,
+      })
+    }
     _ModalCalendar = () => <div >
         <ModalCalendar
             {...this.props}
@@ -30,14 +35,14 @@ class Calendar extends Component {
 
     _btnCalendar = () => <div style={{ position: 'relative', color: 'initial' }} >
         {this._ModalCalendar()}
-        {!this.props.isActive && <BtnCalendar onClick={() => this.setState({
+        {this.props.isButtonActive && <BtnCalendar onClick={() => this.setState({
             openModalCalendar: !this.state.openModalCalendar
         })}
         ><SvgCalendar /></BtnCalendar>}
     </div>
 
     render() {
-        return (this.props.isModal) ? <div style={{ display: 'flex' }}>{this._btnCalendar()}</div> : <div><CalendarCore {...this.props} /></div>
+        return (this.props.isModal) ? <div style={{ display: 'flex' }}>{this._btnCalendar()}</div> : !!this.props.isActive && <div><CalendarCore {...this.props} /></div>
         //return <div style={{display: 'flex'}} >{this._btnCalendar()}</div>
     }
 }
