@@ -318,6 +318,8 @@ class Calendar extends Component {
     return (
       <div style={{
         display: (isActive) ? 'inline-block' : 'none',
+        fontSize: 16,
+        boxSizing: "content-box"
       }}  >
         <div style={{
           justifyContent: 'space-between',
