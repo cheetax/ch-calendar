@@ -1,10 +1,12 @@
 import React from 'react'
-import { Calendar } from 'ch-calendar';
+import CalendarCore from './CalendarCore';
 //import 'ch-calendar/dist/ch-calendar.css';
 
 const ClassModal = (openModal) => (openModal) ? 'modal-dialog active' : 'modal-dialog'
 
-export const ModalCalendar = ({ openModal, date, onClick, onSelect, isMonth=false }) => {
+export const ModalCalendar = (props) => {
+    const { openModal, onClick } = props;
+    
     return <div >
         <div style={openModal ? {
             position: 'fixed',
@@ -18,7 +20,7 @@ export const ModalCalendar = ({ openModal, date, onClick, onSelect, isMonth=fals
         } : null}
             onClick={onClick} />
         <div className={ClassModal(openModal)} >
-            <Calendar isMonth={isMonth} date={date} onSelect={onSelect} />
+            <CalendarCore {...props} />
         </div>
     </div>
 }

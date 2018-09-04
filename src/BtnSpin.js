@@ -8,6 +8,5 @@ const BtnCalendar = ({ onClick, onFocus, children }) => <div className='btn-spin
     </input>{children}</div>
 
 export {
-    BtnSpin,
     BtnCalendar,
 }
