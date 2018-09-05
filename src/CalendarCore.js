@@ -1,6 +1,6 @@
 import moment from 'moment';
 import 'moment/locale/ru';
-import { startOfDay, getMonth, getYear, setDay } from 'date-fns'
+import { startOfDay, getMonth, getYear, setDay, isToday, getDate } from 'date-fns'
 import { Btn } from './Btn'
 import React, { Component } from 'react';
 import './CalendarCore.css';
@@ -40,20 +40,21 @@ class CalendarCore extends Component {
     console.log(month)
     var monthArray = matrixArray(6, 7);
     var current = false;
+    var date = null;
     for (var week = 0; week <= 5; week++) {
       for (var day = 1; day <= 7; day++) {
-        current = moment(month).weekday((week * 7) + (day)).isSame(moment(), 'day')
+        date = setDay(month, (week * 7) + (day))
+        current = isToday(date)
         console.log(((week * 7) + (day)))
-        console.log(setDay(month, (week * 7) + (day), { weekStartsOn: 1 }))
+        console.log(isToday(setDay(month, (week * 7) + (day))))
         monthArray[week][day] = {
-          date: moment(month).weekday((week * 7) + (day)),
-          day: moment(month).weekday((week * 7) + (day)).date(),
-          month: moment(month).weekday((week * 7) + (day)).month(),
+          date,
+          day: getDate(date),
+          month: getMonth(date),
           current,
         }
       }
     }
-    console.log(setDay(month, 42, { weekStartsOn: 1 }))
     return monthArray;
   }
 
