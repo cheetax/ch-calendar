@@ -111,8 +111,8 @@ a.btn-select {
 }
 .modal-dialog-button {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 100%;
+    right: 0;
     opacity: .5;
     background: #FFFFFF;
     overflow: hidden;

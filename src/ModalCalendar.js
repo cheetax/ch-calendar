@@ -3,8 +3,9 @@ import CalendarCore from './CalendarCore';
 import './Modal.css'
 //import 'ch-calendar/dist/ch-calendar.css';
 
-const ClassModal = ({ openModal,isButtonActive }) => {
-    return (isButtonActive) && ((openModal) ? 'modal-dialog-cal active' : 'modal-dialog-cal') || ((openModal) ? 'modal-dialog-flex active' : 'modal-dialog-flex')
+const ClassModal = ({ openModal, isButtonActive }) => {
+    console.log(isButtonActive)
+    return (isButtonActive) && ((openModal) ? 'modal-dialog-button active' : 'modal-dialog-button') || ((openModal) ? 'modal-dialog-flex active' : 'modal-dialog-flex')
 }
 
 const ClassModalOverlay = ({openModal, isButtonActive }) => {
@@ -27,8 +28,8 @@ export const ModalCalendar = (props) => {
             zIndex: '999',
         }}
             onClick={onClick} />}
-        <div className={ClassModalOverlay({openModal,isButtonActive: !!props.isButtonActive})} >
-            <div className={ClassModal({ openModal })} >
+        <div className={ClassModalOverlay({openModal, isButtonActive: !!props.isButtonActive})} >
+            <div className={ClassModal({ openModal, isButtonActive: !!props.isButtonActive })} >
                 <CalendarCore {...props} />
             </div>
         </div>

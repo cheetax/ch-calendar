@@ -1,8 +1,10 @@
 import moment from 'moment';
 import 'moment/locale/ru';
+import { startOfDay, getMonth, getYear, setDay } from 'date-fns'
 import { Btn } from './Btn'
 import React, { Component } from 'react';
 import './CalendarCore.css';
+
 
 moment.locale('ru');
 
@@ -14,18 +16,15 @@ const matrixArray = (row, col) => {
   return arr;
 }
 
-
-
 class CalendarCore extends Component {
 
   constructor(props) {
     super(props)
-    var date = moment(props.date, 'ru').startOf('day');
-
+    var date = startOfDay(props.date);
     this.state = {
       calendar: {
-        year: moment(date).year(),
-        month: moment(date).month(),
+        year: getYear(date),
+        month: getMonth(date),
       },
       isMonth: props.isMonth || false,
       date,
@@ -34,16 +33,18 @@ class CalendarCore extends Component {
       isActive: props.isActive || true,
       toClose: (props.toClose === undefined) ? true : props.toClose,
     }
-  }  
+  }
 
   _fillDayArray = () => {
-    var month = moment({ year: this.state.calendar.year, month: this.state.calendar.month });
+    var month = new Date(this.state.calendar.year, this.state.calendar.month, 1);
+    console.log(month)
     var monthArray = matrixArray(6, 7);
     var current = false;
     for (var week = 0; week <= 5; week++) {
-      for (var day = 0; day <= 6; day++) {
+      for (var day = 1; day <= 7; day++) {
         current = moment(month).weekday((week * 7) + (day)).isSame(moment(), 'day')
-        //console.log(moment(month).weekday((week * 7) + (day)).date())
+        console.log(((week * 7) + (day)))
+        console.log(setDay(month, (week * 7) + (day), { weekStartsOn: 1 }))
         monthArray[week][day] = {
           date: moment(month).weekday((week * 7) + (day)),
           day: moment(month).weekday((week * 7) + (day)).date(),
@@ -52,6 +53,7 @@ class CalendarCore extends Component {
         }
       }
     }
+    console.log(setDay(month, 42, { weekStartsOn: 1 }))
     return monthArray;
   }
 
