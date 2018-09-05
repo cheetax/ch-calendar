@@ -319,7 +319,7 @@ class CalendarCore extends Component {
     //console.log('calendar -' + isActive)
     return (
       <div style={{
-        display: (isActive) ? 'inline-block' : 'none',
+        display: 'inline-block',
         fontSize: 16,
         boxSizing: "content-box"
       }}  >

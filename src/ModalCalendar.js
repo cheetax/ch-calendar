@@ -3,13 +3,20 @@ import CalendarCore from './CalendarCore';
 import './Modal.css'
 //import 'ch-calendar/dist/ch-calendar.css';
 
-const ClassModal = (openModal) => (openModal) ? 'modal-dialog active' : 'modal-dialog'
+const ClassModal = ({ openModal,isButtonActive }) => {
+    return (isButtonActive) && ((openModal) ? 'modal-dialog-cal active' : 'modal-dialog-cal') || ((openModal) ? 'modal-dialog-flex active' : 'modal-dialog-flex')
+}
+
+const ClassModalOverlay = ({openModal, isButtonActive }) => {
+    return ((!isButtonActive) && (openModal ? 'modal-dialog-overlay active' : 'modal-dialog-overlay'))
+}
+
 
 export const ModalCalendar = (props) => {
     const { openModal, onClick } = props;
-    
-    return <div >
-        <div style={(openModal && !!props.isButtonActive ) ? {
+
+    return <div>
+        {(openModal && !!props.isButtonActive) && <div style={{
             position: 'fixed',
             background: 'black',
             opacity: '0',
@@ -18,10 +25,13 @@ export const ModalCalendar = (props) => {
             width: '100%',
             height: '100%',
             zIndex: '999',
-        } : null}
-            onClick={onClick} />
-        <div className={ClassModal(openModal)} >
-            <CalendarCore {...props} />
+        }}
+            onClick={onClick} />}
+        <div className={ClassModalOverlay({openModal,isButtonActive: !!props.isButtonActive})} >
+            <div className={ClassModal({ openModal })} >
+                <CalendarCore {...props} />
+            </div>
         </div>
+
     </div>
 }
