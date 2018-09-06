@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Btn = ({ onClick, children, _key = null, style, className }) => <a
+export const Btn = ({ onClick, children, _key = 1, style, className }) => <a
         className={(() => 'btn-select-day ' + className)()}
         onClick={onClick}
         key={_key}

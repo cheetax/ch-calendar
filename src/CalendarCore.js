@@ -1,12 +1,9 @@
-import moment from 'moment';
-import 'moment/locale/ru';
-import { startOfDay, getMonth, getYear, setDay, isToday, getDate } from 'date-fns'
+
+import { startOfDay, getMonth, getYear, setDay, isToday, getDate, format, setMonth, isThisMonth, isSameDay } from 'date-fns'
+import { locales } from './locales'
 import { Btn } from './Btn'
 import React, { Component } from 'react';
 import './CalendarCore.css';
-
-
-moment.locale('ru');
 
 const matrixArray = (row, col) => {
   var arr = new Array(row);
@@ -30,14 +27,12 @@ class CalendarCore extends Component {
       date,
       openModalSelectMonth: props.isMonth || false,
       openModalCalendar: false,
-      isActive: props.isActive || true,
       toClose: (props.toClose === undefined) ? true : props.toClose,
     }
   }
 
   _fillDayArray = () => {
     var month = new Date(this.state.calendar.year, this.state.calendar.month, 1);
-    console.log(month)
     var monthArray = matrixArray(6, 7);
     var current = false;
     var date = null;
@@ -45,8 +40,6 @@ class CalendarCore extends Component {
       for (var day = 1; day <= 7; day++) {
         date = setDay(month, (week * 7) + (day))
         current = isToday(date)
-        console.log(((week * 7) + (day)))
-        console.log(isToday(setDay(month, (week * 7) + (day))))
         monthArray[week][day] = {
           date,
           day: getDate(date),
@@ -61,13 +54,14 @@ class CalendarCore extends Component {
   _fillMonthArray = () => {
     var monthArray = matrixArray(4, 3)
     var current = false;
+    var month = null;
     for (var p = 0; p <= 3; p++) {
       for (var m = 0; m <= 2; m++) {
-        current = (moment().month((p * 3) + m).isSame(moment(), 'month') && moment().year(this.state.calendar.year).isSame(moment(), 'year'))
-
+        month = setMonth(new Date(), (p * 3) + m)
+        current = isThisMonth(month);
         monthArray[p][m] = {
           current,
-          month: moment().month((p * 3) + m).format('MMM'),
+          month: format(month, 'MMM', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] }),
           m: (p * 3) + m
         }
         //console.log(month);
@@ -115,49 +109,37 @@ class CalendarCore extends Component {
   }
 
   _currentDay = () => {
-    var currentDate = moment().startOf('day');
-    var month = moment(currentDate).month();
-    var year = moment(currentDate).year();
+    var currentDate = startOfDay(new Date());
+    var month = getMonth(currentDate);
+    var year = getYear(currentDate);
     this.setState({
       calendar: {
         year,
         month,
       },
       date: currentDate,
-      currentValue: currentDate.format('DD-MM-YYYY')
+      currentValue: format(currentDate, 'DD-MM-YYYY', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] })
     })
   }
 
   componentWillReceiveProps(nextProps) {
-    var isActive = this.state.isActive;
-    var date = this.props.date;
-    if (nextProps.isActive === undefined && !this.state.isActive) {
-      isActive = true;
-    }
-    else if (nextProps.isActive !== this.state.isActive && nextProps.isActive !== undefined) {
-      isActive = nextProps.isActive;
-    }
-    this.setState({ isActive })
+    
     if (nextProps.date !== undefined) {
-      var _date = moment(nextProps.date).startOf('day')
-      if (!moment(_date).isSame(date)) {
-        date = moment(_date);
-        this.setState({
-          date,
-          calendar: {
-            year: moment(date).year(),
-            month: moment(date).month(),
-          },
-        })
-      }
+      var date = nextProps.date
+      this.setState({
+        date,
+        calendar: {
+          year: getYear(date),
+          month: getMonth(date),
+        },
+      })
     }
-
   }
 
   dayweek = () => {
     var dayweek = [];
     for (var i = 0; i <= 6; i++) {
-      dayweek[i] = moment().day(i + 1).format('dd');
+      dayweek[i] = format(setDay(new Date(),i+1), 'dd', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] });
     }
     return (
       <div style={{ justifyContent: 'space-between', textTransform: 'capitalize' }} className='calendar-flex-row' >
@@ -168,15 +150,10 @@ class CalendarCore extends Component {
   }
 
   _onClick = (date) => {
-    //event.preventDefault();
-    var toClose = this.state.toClose;
     this.setState({
       date,
-      isActive: toClose ? false : true,
     })
-    //console.log(date.format());
-    var _date = date.format();
-    if (this.props.onSelect) this.props.onSelect(new Date(_date))
+    this.props.onSelect && this.props.onSelect(date)
   }
 
   _onClickMonth = (month) => {
@@ -189,8 +166,8 @@ class CalendarCore extends Component {
       openModalSelectMonth = false;
     }
     else {
-      date = moment({ day: date.date(), month, year: calendar.year })
-      this.props.onSelect && this.props.onSelect(new Date(date.format()))
+      date = new Date(calendar.year, month, 1)
+      this.props.onSelect && this.props.onSelect(date)
     }
     this.setState({
       openModalSelectMonth,
@@ -229,7 +206,7 @@ class CalendarCore extends Component {
             cursor: 'arrow',
             userSelect: 'none'
           }} >
-          {(this.state.openModalSelectMonth) ? calendar.year : moment().month(calendar.month).format('MMMM') + ' ' + calendar.year}
+          {(this.state.openModalSelectMonth) ? calendar.year : format(setMonth(new Date(), calendar.month), 'MMMM', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] }) + ' ' + calendar.year}
         </div>
         {(!this.state.openModalSelectMonth) ? <div style={{ position: 'relative', alignSelf: 'flex-end' }} >
           <Btn onClick={() => this.setState({ openModalSelectMonth: !this.state.openModalSelectMonth })}>
@@ -254,7 +231,7 @@ class CalendarCore extends Component {
 
   _selectDayClass = ({ date, day, calendar }) => {
     var result = '';
-    if (moment(date).isSame(day.date)) {
+    if (isSameDay(date, day.date)) {
       if (day.month !== calendar.month) {
         result += 'no-current-month active'
       }
@@ -299,7 +276,7 @@ class CalendarCore extends Component {
       {arr.map((row, ri) => <div key={ri} style={{ justifyContent: 'space-around' }} className='calendar-flex-row' >
         {row.map((col, ci) =>
           <Btn _key={ci}
-            className={(moment(month).isSame(col.m)) ? 'btn-select-day active' : (col.current) ? 'btn-select-day current' : 'btn-select-day'}
+            className={ (month === col.m) ? 'btn-select-day active' : (col.current) ? 'btn-select-day current' : 'btn-select-day'}
             onClick={() => this._onClickMonth(col.m)}
             style={{
               height: 59.5,
