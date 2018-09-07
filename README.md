@@ -38,5 +38,5 @@ Common props you may want to specify include:
 * `isMonth` - [boolean] If 'true' select a month, else select a day
 * `date` - [Date] Date for mark in the calendar. If undefined, will marked today.
 * `onSelect` - [function] The selected date will be passed in the function in the parameter 'date'
-* `toClose` - [boolean] If 'false' do not close window after selected.
+* `toNotClose` - [boolean] If 'true' do not close window after selected.
 

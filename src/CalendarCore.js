@@ -27,7 +27,6 @@ class CalendarCore extends Component {
       date,
       openModalSelectMonth: props.isMonth || false,
       openModalCalendar: false,
-      toClose: (props.toClose === undefined) ? true : props.toClose,
     }
   }
 

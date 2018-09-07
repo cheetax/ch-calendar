@@ -10,15 +10,21 @@ class Calendar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            openModalCalendar: !!props.isActive,
+            openModalCalendar: !props.toNotClose && !!props.isActive || false,
         }
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(!!nextProps.toNotClose)
         if (nextProps.isActive !== undefined) {
-            this.setState({
-                openModalCalendar: !!nextProps.isActive,
-            })
+            if (!!nextProps.toNotClose || !nextProps.toNotClose) {
+                this.setState({
+                    openModalCalendar: nextProps.isActive,
+                })
+            }
+            else {
+                nextProps.isActive && this.setState({ openModalCalendar: nextProps.isActive })
+            }
         }
     }
 
@@ -27,13 +33,13 @@ class Calendar extends Component {
             {...this.props}
             openModal={this.state.openModalCalendar}
             onSelect={(date) => {
-                if (this.props.toClose === undefined || this.props.toClose) {
-                    this.setState({ openModalCalendar: false })                    
+                if (this.props.toNotClose === undefined || !this.props.toNotClose) {
+                    this.setState({ openModalCalendar: false })
                 }
                 this.props.onSelect && this.props.onSelect(date)
             }}
             onClick={() => {
-                (this.props.toClose === undefined || this.props.toClose) && this.setState({ openModalCalendar: false })
+                (this.props.toNotClose === undefined || !this.props.toNotClose) && this.setState({ openModalCalendar: false })
             }}
         />
 
@@ -47,7 +53,7 @@ class Calendar extends Component {
 
     render() {
         return ((this.props.isModal) ?
-            <div style={{ display: 'flex', justifyContent:'center' }}>{this._btnCalendar()}</div> :
+            <div style={{ display: 'flex', justifyContent: 'center' }}>{this._btnCalendar()}</div> :
             !!this.props.isActive && <div><CalendarCore {...this.props} /></div>)
     }
 }
