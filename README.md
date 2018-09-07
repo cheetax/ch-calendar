@@ -19,7 +19,9 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Test Input Field</h1>
         </header>
-        <div className='App-intro'><Calendar isModal isButtonActive date={date} onSelect={(date) => { console.log(date) }} /> </div>
+        <div className='App-intro'>
+          <Calendar isModal isButtonActive date={date} onSelect={(date) => { console.log(date) }} /> 
+        </div>
       </div>
     );
   }
