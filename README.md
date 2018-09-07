@@ -32,14 +32,10 @@ export default App;
 
 Common props you may want to specify include:
 
-* `autoFocus` - focus the control when it mounts
-* `className` - apply a className to the control
-* `isDisabled` - disable the control
-* `isMulti` - allow the user to select multiple values
-* `isSearchable` - allow the user to search for matching options
-* `name` - generate an HTML input with this name, containing the current value
-* `onChange` - subscribe to change events
-* `options` - specify the options the user can select from
-* `placeholder` - change the text displayed when no option is selected
-* `value` - control the current value
+* `isModal` - 
+* `isButtonActive` - 
+* `isActive` - 
+* `isMonth` - 
+* `date` - 
+* `onSelect` - 
 

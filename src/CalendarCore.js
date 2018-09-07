@@ -293,7 +293,7 @@ class CalendarCore extends Component {
     const {
       calendar,
       date,
-      isActive } = this.state;
+    } = this.state;
     const arrDay = this._fillDayArray();
     const arrMonth = this._fillMonthArray();
     //console.log('calendar -' + isActive)
