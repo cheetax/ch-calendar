@@ -15,17 +15,11 @@ class Calendar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(!!nextProps.toNotClose)
-        if (nextProps.isActive !== undefined) {
-            if (!!nextProps.toNotClose || !nextProps.toNotClose) {
+        
                 this.setState({
-                    openModalCalendar: nextProps.isActive,
+                    openModalCalendar: !!nextProps.isActive,
                 })
-            }
-            else {
-                nextProps.isActive && this.setState({ openModalCalendar: nextProps.isActive })
-            }
-        }
+           
     }
 
     _ModalCalendar = () =>
