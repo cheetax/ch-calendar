@@ -313,7 +313,7 @@ class CalendarCore extends Component {
           </div>
           <div style={{ height: 262, overflow: 'hidden' }} >
             {this._selectMonths(arrMonth, calendar.month)}
-            {this._selectDay(calendar, arrDay, date)}
+            {/* {this._selectDay(calendar, arrDay, date)} */}
           </div>
 
         </div>
