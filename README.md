@@ -32,10 +32,11 @@ export default App;
 
 Common props you may want to specify include:
 
-* `isModal` - 
-* `isButtonActive` - 
-* `isActive` - 
-* `isMonth` - 
-* `date` - 
-* `onSelect` - 
+* `isModal` - [boolean] If 'true' open a modal window
+* `isButtonActive` - [boolean] If 'true' show 'open' button. If False, the opens is through isActive = 'true'
+* `isActive` - [boolean] If 'true' show window
+* `isMonth` - [boolean] If 'true' select a month, else select a day
+* `date` - [Date] Date for mark in the calendar. If undefined, will marked today.
+* `onSelect` - [function] The selected date will be passed in the function in the parameter 'date'
+* `toClose` - [boolean] If 'false' do not close window after selected.
 

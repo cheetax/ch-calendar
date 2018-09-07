@@ -17,7 +17,7 @@ class CalendarCore extends Component {
 
   constructor(props) {
     super(props)
-    var date = startOfDay(props.date);
+    var date = !!props.date && startOfDay(props.date) || new Date()
     this.state = {
       calendar: {
         year: getYear(date),

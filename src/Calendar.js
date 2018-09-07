@@ -27,11 +27,13 @@ class Calendar extends Component {
             {...this.props}
             openModal={this.state.openModalCalendar}
             onSelect={(date) => {
-                this.setState({ openModalCalendar: false })
+                if (this.props.toClose === undefined || this.props.toClose) {
+                    this.setState({ openModalCalendar: false })                    
+                }
                 this.props.onSelect && this.props.onSelect(date)
             }}
             onClick={() => {
-                this.setState({ openModalCalendar: false })
+                (this.props.toClose === undefined || this.props.toClose) && this.setState({ openModalCalendar: false })
             }}
         />
 
