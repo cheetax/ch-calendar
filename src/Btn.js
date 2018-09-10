@@ -1,9 +1,9 @@
 import React from 'react'
 
-export const Btn = ({ onClick, children, _key = 1, style, className }) => <a
+export const Btn = ({ onClick, children, style, className }) => {
+    return <a
         className={(() => 'btn-select-day ' + className)()}
         onClick={onClick}
-        key={_key}
         style={{
             height: 32,
             width: 32,
@@ -13,3 +13,15 @@ export const Btn = ({ onClick, children, _key = 1, style, className }) => <a
             alignItems: 'center',
             ...style,
         }}>{children}</a>
+}
+
+// export const Btn = ({ onClick, style, _key, onFocus, children, className }) => <div className={(() => 'btn-select-day btn-spin ' + className)()}
+//     key={_key}
+//     style={style}
+//     onClick={onClick ? (event) => onClick(event) : null}>
+//     <input
+//         key={_key}
+//         type='url'
+//         readOnly
+//         className='btn-spin browser-default'>
+//     </input>{children}</div>

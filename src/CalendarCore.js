@@ -122,7 +122,7 @@ class CalendarCore extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    
+
     if (nextProps.date !== undefined) {
       var date = nextProps.date
       this.setState({
@@ -138,7 +138,7 @@ class CalendarCore extends Component {
   dayweek = () => {
     var dayweek = [];
     for (var i = 0; i <= 6; i++) {
-      dayweek[i] = format(setDay(new Date(),i+1), 'dd', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] });
+      dayweek[i] = format(setDay(new Date(), i + 1), 'dd', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] });
     }
     return (
       <div style={{ justifyContent: 'space-between', textTransform: 'capitalize' }} className='calendar-flex-row' >
@@ -183,12 +183,12 @@ class CalendarCore extends Component {
         justifyContent: 'space-between',
         alignItems: 'center'
       }} >
-      <Btn _key={'_1'} onClick={this._currentDay}>
+      <Btn onClick={this._currentDay}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path d="M5 15H3v4c0 1.1.9 2 2 2h4v-2H5v-4zM5 5h4V3H5c-1.1 0-2 .9-2 2v4h2V5zm14-2h-4v2h4v4h2V5c0-1.1-.9-2-2-2zm0 16h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
         </svg>
       </Btn>
-      <Btn _key={'_2'} onClick={this._downMonth}>
+      <Btn onClick={this._downMonth}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='icon-svg' >
           <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
         </svg>
@@ -208,7 +208,7 @@ class CalendarCore extends Component {
           {(this.state.openModalSelectMonth) ? calendar.year : format(setMonth(new Date(), calendar.month), 'MMMM', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] }) + ' ' + calendar.year}
         </div>
         {(!this.state.openModalSelectMonth) ? <div style={{ position: 'relative', alignSelf: 'flex-end' }} >
-          <Btn _key={'_3'} onClick={() => this.setState({ openModalSelectMonth: !this.state.openModalSelectMonth })}>
+          <Btn onClick={() => this.setState({ openModalSelectMonth: !this.state.openModalSelectMonth })}>
             <svg xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -220,7 +220,7 @@ class CalendarCore extends Component {
           {/* {this.modalSelectMonth(this)} */}
         </div> : null}
       </div>
-      <Btn _key={'_4'} onClick={this._upMonth}>
+      <Btn onClick={this._upMonth}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='icon-svg' >
           <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
         </svg>
@@ -255,16 +255,17 @@ class CalendarCore extends Component {
   _selectDay = (calendar, arr, date) => <div style={{ overflow: 'hidden' }} className={(this.state.openModalSelectMonth) ? 'off-select-day' : 'on-select-day'}>
     <div className='calendar-flex-column' >
       {this.dayweek()}
-      {arr.map((week, wi) => <div key={wi} style={{ justifyContent: 'space-between' }} className='calendar-flex-row' >
-        {week.map((day, di) =>
-          <Btn _key={di}
+      {arr.map((week, i ) => <div key={i} style={{ justifyContent: 'space-between' }} className='calendar-flex-row' >
+        {week.map((day) => <div key={day.date}>
+          <Btn
             className={this._selectDayClass({ date, day, calendar })}
             onClick={() => {
               //console.log('select day - ' + day.date)
               return this._onClick(day.date)
             }}>
             {day.day}
-          </Btn>
+          </Btn> </div>
+
         )}</div>
       )}
     </div>
@@ -272,10 +273,10 @@ class CalendarCore extends Component {
 
   _selectMonths = (arr, month) => <div style={{ overflow: 'hidden' }} className={(this.state.openModalSelectMonth) ? 'on-select-month' : 'off-select-month'}>
     <div className='calendar-flex-column' >
-      {arr.map((row, ri) => <div key={ri} style={{ justifyContent: 'space-around' }} className='calendar-flex-row' >
-        {row.map((col, ci) =>
-          <Btn _key={ri + '-' + ci}
-            className={ (month === col.m) ? 'btn-select-day active' : (col.current) ? 'btn-select-day current' : 'btn-select-day'}
+      {arr.map((row, i) => <div key={i} style={{ justifyContent: 'space-around' }} className='calendar-flex-row' >
+        {row.map((col) => <div key={col.m} >
+          <Btn
+            className={(month === col.m) ? 'btn-select-day active' : (col.current) ? 'btn-select-day current' : 'btn-select-day'}
             onClick={() => this._onClickMonth(col.m)}
             style={{
               height: 59.5,
@@ -283,7 +284,10 @@ class CalendarCore extends Component {
             }} >
             {col.month}
           </Btn>
-        )}</div>
+        </div>
+
+        )}
+      </div>
       )}
     </div>
   </div>
@@ -313,7 +317,7 @@ class CalendarCore extends Component {
           </div>
           <div style={{ height: 262, overflow: 'hidden' }} >
             {this._selectMonths(arrMonth, calendar.month)}
-            {/* {this._selectDay(calendar, arrDay, date)} */}
+            {this._selectDay(calendar, arrDay, date)}
           </div>
 
         </div>
