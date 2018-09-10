@@ -229,7 +229,7 @@ class CalendarCore extends Component {
   }
 
   _selectDayClass = ({ date, day, calendar }) => {
-    var result = '';
+    var result = ' ';
     if (isSameDay(date, day.date)) {
       if (day.month !== calendar.month) {
         result += 'no-current-month active'
