@@ -7,11 +7,7 @@ module.exports = {
     filename: 'index.js',
     libraryTarget: 'commonjs2'
   },
-  plugins: [
-    new webpack.ContextReplacementPlugin(
-      /moment[\/\\]locale$/,
-      /ru/
-    ),
+  plugins: [   
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional

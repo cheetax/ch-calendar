@@ -23,10 +23,8 @@ class CalendarCore extends Component {
         year: getYear(date),
         month: getMonth(date),
       },
-      isMonth: props.isMonth || false,
       date,
-      openModalSelectMonth: props.isMonth || false,
-      openModalCalendar: false,
+      openModalSelectMonth: props.isMonth || false
     }
   }
 
@@ -52,14 +50,12 @@ class CalendarCore extends Component {
 
   _fillMonthArray = () => {
     var monthArray = matrixArray(4, 3)
-    var current = false;
     var month = null;
     for (var p = 0; p <= 3; p++) {
       for (var m = 0; m <= 2; m++) {
         month = setMonth(new Date(), (p * 3) + m)
-        current = isThisMonth(month);
         monthArray[p][m] = {
-          current,
+          current: isThisMonth(month),
           month: format(month, 'MMM', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] }),
           m: (p * 3) + m
         }
