@@ -252,7 +252,6 @@ class CalendarCore extends Component {
             {col.month}
           </Btn>
         </div>
-
         )}
       </div>
       )}
@@ -266,7 +265,6 @@ class CalendarCore extends Component {
     } = this.state;
     const arrDay = this._fillDayArray();
     const arrMonth = this._fillMonthArray();
-    //console.log('calendar -' + isActive)
     return (
       <div style={{
         display: 'inline-block',
@@ -289,7 +287,6 @@ class CalendarCore extends Component {
 
         </div>
       </div>
-
     );
   }
 }

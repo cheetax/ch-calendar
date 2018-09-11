@@ -1,21 +1,13 @@
 import React from 'react'
 import CalendarCore from './CalendarCore';
 import './Modal.css'
-//import 'ch-calendar/dist/ch-calendar.css';
 
-const ClassModal = ({ openModal, isButtonActive }) => {
-    //console.log(((isButtonActive) && ((openModal) ? 'modal-dialog-button active' : 'modal-dialog-button') || ((openModal) ? 'modal-dialog-flex active' : 'modal-dialog-flex')))
-    return ((isButtonActive) && ((openModal) ? 'modal-dialog-button active' : 'modal-dialog-button') || ((openModal) ? 'modal-dialog-flex active' : 'modal-dialog-flex'))
-}
+const ClassModal = ({ openModal, isButtonActive }) => ((isButtonActive) && ((openModal) ? 'modal-dialog-button active' : 'modal-dialog-button') || ((openModal) ? 'modal-dialog-flex active' : 'modal-dialog-flex'))
 
-const ClassModalOverlay = ({ openModal, isButtonActive }) => {
-    return ((!isButtonActive) && (openModal ? 'modal-dialog-overlay active' : 'modal-dialog-overlay') || '')
-}
-
+const ClassModalOverlay = ({ openModal, isButtonActive }) => ((!isButtonActive) && (openModal ? 'modal-dialog-overlay active' : 'modal-dialog-overlay') || '')
 
 export const ModalCalendar = (props) => {
-    const { openModal, onClick } = props;
-
+    const { openModal } = props;
     return <div>
         {(openModal && !props.isButtonActive) ? <div style={{
             position: 'fixed',
@@ -27,7 +19,7 @@ export const ModalCalendar = (props) => {
             height: '100%',
             zIndex: '999',
         }}
-            onClick={onClick} /> : null}
+            onClick={props.onClick} /> : null}
         <div className={ClassModalOverlay({ openModal, isButtonActive: !!props.isButtonActive })} >
             <div className={ClassModal({ openModal, isButtonActive: !!props.isButtonActive })} >
                 <CalendarCore {...props} />
