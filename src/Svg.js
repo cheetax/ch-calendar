@@ -14,10 +14,18 @@ const SvgCalendar = () => <Svg ><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.1
 
 const SvgArrowLeft = () => <Svg><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></Svg>
 
+const SvgArrowRight = () => <Svg><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" /></Svg>
 
+const SvgArrowDown = () => <Svg><path d="M7 10l5 5 5-5z" /></Svg>
+
+const SvgCenterFocus = () => <Svg  ><path d="M5 15H3v4c0 1.1.9 2 2 2h4v-2H5v-4zM5 5h4V3H5c-1.1 0-2 .9-2 2v4h2V5zm14-2h-4v2h4v4h2V5c0-1.1-.9-2-2-2zm0 16h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" /></Svg>
 
 export {
     SvgPlus,
     SvgMinus,
     SvgCalendar,
+    SvgArrowLeft,
+    SvgArrowRight,
+    SvgArrowDown,
+    SvgCenterFocus
 }

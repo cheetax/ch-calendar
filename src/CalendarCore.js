@@ -2,6 +2,7 @@
 import { startOfDay, getMonth, getYear, setDay, isToday, getDate, format, setMonth, isThisMonth, isSameDay } from 'date-fns'
 import { locales } from './locales'
 import { Btn } from './Btn'
+import { SvgArrowDown, SvgArrowLeft, SvgArrowRight, SvgCenterFocus } from './Svg'
 import React, { Component } from 'react';
 import './CalendarCore.css';
 
@@ -139,7 +140,16 @@ class CalendarCore extends Component {
     return (
       <div style={{ justifyContent: 'space-between', textTransform: 'capitalize' }} className='calendar-flex-row' >
         {
-          dayweek.map((day, i) => <span key={i} style={{ height: 32, width: 32, margin: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', }} >{day}</span>)
+          dayweek.map((day, i) => <span
+            key={i}
+            style={{
+              height: 32,
+              width: 32,
+              margin: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }} >{day}</span>)
         }
       </div>)
   }
@@ -180,14 +190,10 @@ class CalendarCore extends Component {
         alignItems: 'center'
       }} >
       <Btn onClick={this._currentDay}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <path d="M5 15H3v4c0 1.1.9 2 2 2h4v-2H5v-4zM5 5h4V3H5c-1.1 0-2 .9-2 2v4h2V5zm14-2h-4v2h4v4h2V5c0-1.1-.9-2-2-2zm0 16h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
-        </svg>
+        <SvgCenterFocus />
       </Btn>
       <Btn onClick={this._downMonth}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='icon-svg' >
-          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-        </svg>
+        <SvgArrowLeft />
       </Btn>
       <div className='calendar-flex-row' style={{ flex: 'auto' }} >
         <div style={
@@ -205,63 +211,28 @@ class CalendarCore extends Component {
         </div>
         {(!this.state.openModalSelectMonth) ? <div style={{ position: 'relative', alignSelf: 'flex-end' }} >
           <Btn onClick={() => this.setState({ openModalSelectMonth: !this.state.openModalSelectMonth })}>
-            <svg xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className={(this.state.openModalSelectMonth) ? "icon-down-arrow dropdown-active" : "icon-down-arrow"}>
-              <path d="M7 10l5 5 5-5z" />
-            </svg>
+            <SvgArrowDown />
           </Btn>
-          {/* {this.modalSelectMonth(this)} */}
         </div> : null}
       </div>
       <Btn onClick={this._upMonth}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='icon-svg' >
-          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-        </svg>
+        <SvgArrowRight />
       </Btn>
     </div>)
   }
 
-  _selectDayClass = ({ date, day, calendar }) => {
-    var result = ' ';
-    if (isSameDay(date, day.date)) {
-      if (day.month !== calendar.month) {
-        result += 'no-current-month active'
-      }
-      else {
-        result += 'active'
-      }
-    }
-    else {
-      if (day.current) {
-        result += 'current';
-      }
-      else {
-        if (day.month !== calendar.month) {
-          result += 'no-current-month'
-        }
-      }
-    }
-    //console.log(result)
-    return result;
-  }
+  _selectDayClass = ({ date, day, calendar }) => (isSameDay(date, day.date)) && ((day.month !== calendar.month) ? 'no-current-month active' : 'active') || ((day.current) ? 'current' : (day.month !== calendar.month) ? 'no-current-month' : ' ')
 
   _selectDay = (calendar, arr, date) => <div style={{ overflow: 'hidden' }} className={(this.state.openModalSelectMonth) ? 'off-select-day' : 'on-select-day'}>
     <div className='calendar-flex-column' >
       {this.dayweek()}
-      {arr.map((week, i ) => <div key={i} style={{ justifyContent: 'space-between' }} className='calendar-flex-row' >
+      {arr.map((week, i) => <div key={i} style={{ justifyContent: 'space-between' }} className='calendar-flex-row' >
         {week.map((day) => <div key={day.date}>
           <Btn
             className={this._selectDayClass({ date, day, calendar })}
-            onClick={() => {
-              //console.log('select day - ' + day.date)
-              return this._onClick(day.date)
-            }}>
+            onClick={() => this._onClick(day.date)}>
             {day.day}
           </Btn> </div>
-
         )}</div>
       )}
     </div>
