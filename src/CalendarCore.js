@@ -143,8 +143,8 @@ class CalendarCore extends Component {
           dayweek.map((day, i) => <span
             key={i}
             style={{
-              height: 32,
-              width: 32,
+              height: this.state.button,
+              width: this.state.button,
               margin: 1,
               display: 'flex',
               justifyContent: 'center',
@@ -189,10 +189,20 @@ class CalendarCore extends Component {
         justifyContent: 'space-between',
         alignItems: 'center'
       }} >
-      <Btn onClick={this._currentDay}>
+      <Btn
+        style={{
+          height: this.state.button,
+          width: this.state.button,
+        }}
+        onClick={this._currentDay}>
         <SvgCenterFocus />
       </Btn>
-      <Btn onClick={this._downMonth}>
+      <Btn
+        style={{
+          height: this.state.button,
+          width: this.state.button,
+        }}
+        onClick={this._downMonth}>
         <SvgArrowLeft />
       </Btn>
       <div className='calendar-flex-row' style={{ flex: 'auto' }} >
@@ -210,12 +220,24 @@ class CalendarCore extends Component {
           {(this.state.openModalSelectMonth) ? calendar.year : format(setMonth(new Date(), calendar.month), 'MMMM', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] }) + ' ' + calendar.year}
         </div>
         {(!this.state.openModalSelectMonth) ? <div style={{ position: 'relative', alignSelf: 'flex-end' }} >
-          <Btn onClick={() => this.setState({ openModalSelectMonth: !this.state.openModalSelectMonth })}>
+          <Btn
+            style={{
+              height: this.state.button,
+              width: this.state.button,
+            }}
+            onClick={() => this.setState({
+              openModalSelectMonth: !this.state.openModalSelectMonth
+            })}>
             <SvgArrowDown />
           </Btn>
         </div> : null}
       </div>
-      <Btn onClick={this._upMonth}>
+      <Btn
+        onClick={this._upMonth}
+        style={{
+          height: this.state.button,
+          width: this.state.button,
+        }}>
         <SvgArrowRight />
       </Btn>
     </div>)
@@ -230,6 +252,10 @@ class CalendarCore extends Component {
         {week.map((day) => <div key={day.date}>
           <Btn
             className={this._selectDayClass({ date, day, calendar })}
+            style={{
+              height: this.state.button,
+              width: this.state.button,
+            }}
             onClick={() => this._onClick(day.date)}>
             {day.day}
           </Btn> </div>
@@ -246,8 +272,8 @@ class CalendarCore extends Component {
             className={(month === col.m) ? 'btn-select-day active' : (col.current) ? 'btn-select-day current' : 'btn-select-day'}
             onClick={() => this._onClickMonth(col.m)}
             style={{
-              height: 59.5,
-              width: 59.5,
+              height: this.state.bigButton,
+              width: this.state.bigButton,
             }} >
             {col.month}
           </Btn>
@@ -258,6 +284,33 @@ class CalendarCore extends Component {
     </div>
   </div>
 
+  _ref = (elem) => {
+    let {
+      clientWidth,
+      clientHeight
+    } = elem
+    let button = 25;
+    let bigButton = 46;
+    let height = 200;
+    let width = 177;
+    let _height = (clientWidth * 1.13) > clientHeight ? clientHeight : clientWidth * 1.13
+    let _width = (clientHeight / 1.13) > clientWidth ? clientWidth : clientHeight / 1.13
+    if (_height > 200 && _width > 177) {
+      height = _height
+      width = _height / 1.13
+      button = height / 8;
+      bigButton = height / 4.35
+    }
+    this.setState({
+      height,
+      button,
+      bigButton
+    })
+
+    console.log(clientWidth, clientHeight)
+    console.log(_width, _height)
+  }
+
   render() {
     const {
       calendar,
@@ -266,7 +319,7 @@ class CalendarCore extends Component {
     const arrDay = this._fillDayArray();
     const arrMonth = this._fillMonthArray();
     return (
-      <div style={{
+      <div ref={this._ref} style={{
         display: 'inline-block',
         fontSize: 16,
         boxSizing: "content-box"
@@ -280,7 +333,7 @@ class CalendarCore extends Component {
           <div style={{ borderBottom: '1px solid #e0e0e0', alignItems: 'center', textTransform: 'capitalize' }} className="calendar-flex-row">
             {this._selectMonth(calendar)}
           </div>
-          <div style={{ height: 262, overflow: 'hidden' }} >
+          <div style={{ height: this.state.height, overflow: 'hidden' }} >
             {this._selectMonths(arrMonth, calendar.month)}
             {this._selectDay(calendar, arrDay, date)}
           </div>

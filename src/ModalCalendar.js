@@ -2,9 +2,9 @@ import React from 'react'
 import CalendarCore from './CalendarCore';
 import './Modal.css'
 
-const ClassModal = ({ openModal, isButtonActive }) => ((isButtonActive) && ((openModal) ? 'modal-dialog-button active' : 'modal-dialog-button') || ((openModal) ? 'modal-dialog-flex active' : 'modal-dialog-flex'))
+const ClassModal = ({ openModal, isButtonActive }) => ((isButtonActive) && ((openModal) ? 'modal-calendar-button active' : 'modal-calendar-button') || ((openModal) ? 'modal-calendar-flex active' : 'modal-calendar-flex'))
 
-const ClassModalOverlay = ({ openModal, isButtonActive }) => ((!isButtonActive) && (openModal ? 'modal-dialog-overlay active' : 'modal-dialog-overlay') || '')
+const ClassModalOverlay = ({ openModal, isButtonActive }) => ((!isButtonActive) && (openModal ? 'modal-calendar-overlay active' : 'modal-calendar-overlay') || '')
 
 export const ModalCalendar = (props) => {
     const { openModal } = props;
