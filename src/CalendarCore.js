@@ -295,7 +295,7 @@ class CalendarCore extends Component {
     let width = 232;
     let _height = (clientWidth * 1.13) > clientHeight ? clientHeight : clientWidth * 1.13
     let _width = (clientHeight / 1.13) > clientWidth ? clientWidth : clientHeight / 1.13
-    if (_height > 200 && _width > 177) {
+    if (_height > height && _width > width) {
       height = _height
       width = _height / 1.13
       button = height / 8;
@@ -306,9 +306,6 @@ class CalendarCore extends Component {
       button,
       bigButton
     })
-
-    console.log(clientWidth, clientHeight)
-    console.log(_width, _height)
   }
 
   render() {
