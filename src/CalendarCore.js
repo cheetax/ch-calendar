@@ -289,10 +289,10 @@ class CalendarCore extends Component {
       clientWidth,
       clientHeight
     } = elem
-    let button = 25;
-    let bigButton = 46;
-    let height = 200;
-    let width = 177;
+    let button = 32;
+    let bigButton = 59.5;
+    let height = 262;
+    let width = 232;
     let _height = (clientWidth * 1.13) > clientHeight ? clientHeight : clientWidth * 1.13
     let _width = (clientHeight / 1.13) > clientWidth ? clientWidth : clientHeight / 1.13
     if (_height > 200 && _width > 177) {
