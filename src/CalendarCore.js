@@ -25,7 +25,10 @@ class CalendarCore extends Component {
         month: getMonth(date),
       },
       date,
-      openModalSelectMonth: props.isMonth || false
+      openModalSelectMonth: props.isMonth || false,
+      button: 32,
+      bigButton: 59.5,
+      height: 262,
     }
   }
 
