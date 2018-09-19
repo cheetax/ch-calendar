@@ -292,23 +292,27 @@ class CalendarCore extends Component {
       clientWidth,
       clientHeight
     } = elem
-    let button = 32;
-    let bigButton = 59.5;
-    let height = 262;
-    let width = 232;
-    let _height = (clientWidth * 1.13) > clientHeight ? clientHeight : clientWidth * 1.13
-    let _width = (clientHeight / 1.13) > clientWidth ? clientWidth : clientHeight / 1.13
-    if (_height > height && _width > width) {
-      height = _height
-      width = _height / 1.13
-      button = height / 8;
-      bigButton = height / 4.35
-    }
-    this.setState({
-      height,
-      button,
-      bigButton
-    })
+    console.log(clientHeight, clientWidth)
+    // let button = 32;
+    // let bigButton = 59.5;
+    // let height = 262;
+    // let width = 232;
+    //let _height = (clientWidth * 1.13) > clientHeight ? clientHeight : clientWidth * 1.13
+    //let _width = (clientHeight / 1.13) > clientWidth ? clientWidth : clientHeight / 1.13
+    let _height = (clientWidth * 1.13)
+    let _width = (clientHeight / 1.13)
+    console.log(_height, _width)
+    // if (_height > height && _width > width) {
+    //   height = _height
+    //   width = _height / 1.13
+    //   button = height / 8;
+    //   bigButton = height / 4.35
+    // }
+    // this.setState({
+    //   height,
+    //   button,
+    //   bigButton
+    // })
   }
 
   render() {
@@ -322,7 +326,9 @@ class CalendarCore extends Component {
       <div ref={this._ref} style={{
         display: 'inline-block',
         fontSize: 16,
-        boxSizing: "content-box"
+        boxSizing: "content-box",
+        height: '100%',
+        width: '100%'
       }}  >
         <div style={{
           justifyContent: 'space-between',

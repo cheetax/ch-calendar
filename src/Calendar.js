@@ -44,7 +44,7 @@ class Calendar extends Component {
     render() {
         return ((this.props.isModal) ?
             <div style={{ display: 'flex', justifyContent: 'center' }}>{this._btnCalendar()}</div> :
-            !!this.props.isActive && <div><CalendarCore {...this.props} /></div>)
+            !!this.props.isActive && <div style={{height: '100%'}} ><CalendarCore {...this.props} /></div>)
     }
 }
 

@@ -8,7 +8,7 @@ const ClassModalOverlay = ({ openModal, isButtonActive }) => ((!isButtonActive) 
 
 export const ModalCalendar = (props) => {
     const { openModal } = props;
-    return <div>
+    return <div style={{ height: '100%'}} >
         {(openModal && !props.isButtonActive) ? <div style={{
             position: 'fixed',
             background: 'black',
