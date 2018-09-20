@@ -28,7 +28,9 @@ class CalendarCore extends Component {
       openModalSelectMonth: props.isMonth || false,
       button: 32,
       bigButton: 59.5,
-      height: 262,
+      height: 263,
+      width: 267,
+      header: 38,
     }
   }
 
@@ -292,28 +294,29 @@ class CalendarCore extends Component {
       clientWidth,
       clientHeight
     } = elem
-    console.log(clientHeight, clientWidth)
-    // let button = 32;
-    // let bigButton = 59.5;
-    // let height = 262;
-    // let width = 232;
-    //let _height = (clientWidth * 1.13) > clientHeight ? clientHeight : clientWidth * 1.13
-    //let _width = (clientHeight / 1.13) > clientWidth ? clientWidth : clientHeight / 1.13
-    let _height = (clientWidth * 1.13)
-    let _width = (clientHeight / 1.13)
-    if (_width*1.13 > _height) _height = _width * 1.13
-    console.log(_height, _width)
-    // if (_height > height && _width > width) {
-    //   height = _height
-    //   width = _height / 1.13
-    //   button = height / 8;
-    //   bigButton = height / 4.35
-    // }
-    this.setState({
-      height,
-      button,
-      bigButton
-    })
+    console.log('1',clientHeight, clientWidth)
+    if (clientHeight > this.state.height + this.state.header) {
+      let _height = (clientWidth * 1.13) > clientHeight ? clientHeight : clientWidth * 1.13
+      let _width = (clientHeight / 1.13) > clientWidth ? clientWidth : clientHeight / 1.13
+      console.log('2',_height, _width)
+      if (_width * 1.13 < _height) {
+        _height = _width * 1.13
+      }
+      console.log('3', _height, _width)
+
+      // if (_height > height && _width > width) {
+      //   height = _height
+      //   width = _height / 1.13
+      var button = Math.floor((_height - this.state.header) / 8.3);
+      var bigButton = Math.floor((_height - this.state.header) / 4.35)
+      // }
+      this.setState({
+        height: Math.round(_height - this.state.header),
+        width: Math.round(_width),
+        button,
+        bigButton
+      })
+    }
   }
 
   render() {
@@ -332,15 +335,18 @@ class CalendarCore extends Component {
         width: '100%'
       }}  >
         <div style={{
+          height: this.state.height + this.state.header,
+          width: this.state.width,
           justifyContent: 'space-between',
           //fontSize: 20,
-          border: '1px solid #e0e0e0'
+          border: '1px solid #e0e0e0',
+          margin: 'auto'
         }}
           className="calendar-flex-column">
-          <div style={{ borderBottom: '1px solid #e0e0e0', alignItems: 'center', textTransform: 'capitalize' }} className="calendar-flex-row">
+          <div style={{height: this.state.header , width: this.state.width, borderBottom: '1px solid #e0e0e0', alignItems: 'center', textTransform: 'capitalize' }} className="calendar-flex-row">
             {this._selectMonth(calendar)}
           </div>
-          <div style={{ height: this.state.height, overflow: 'hidden' }} >
+          <div style={{ height: this.state.height, width: this.state.width, overflow: 'hidden' }} >
             {this._selectMonths(arrMonth, calendar.month)}
             {this._selectDay(calendar, arrDay, date)}
           </div>
