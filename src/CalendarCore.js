@@ -293,6 +293,7 @@ class CalendarCore extends Component {
       clientWidth,
       clientHeight
     } = elem
+    console.log(clientHeight, clientWidth)
     if (clientHeight > this.state.height + this.state.header) {
       let _height = (clientWidth * 1.13) > clientHeight ? clientHeight : clientWidth * 1.13
       let _width = (clientHeight / 1.13) > clientWidth ? clientWidth : clientHeight / 1.13
