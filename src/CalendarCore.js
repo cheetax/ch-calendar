@@ -293,7 +293,8 @@ class CalendarCore extends Component {
       clientWidth,
       clientHeight
     } = elem
-    console.log(clientHeight, clientWidth)
+    clientHeight -= 2
+    clientWidth -= 2
     if (clientHeight > this.state.height + this.state.header) {
       let _height = (clientWidth * 1.13) > clientHeight ? clientHeight : clientWidth * 1.13
       let _width = (clientHeight / 1.13) > clientWidth ? clientWidth : clientHeight / 1.13
@@ -303,6 +304,7 @@ class CalendarCore extends Component {
       var header = (_height / 8)
       var button = header - 6;
       var bigButton = ((_height - header) / 4) - 6
+      console.log(_height, _width)
       this.setState({
         height: (_height - header),
         header,
@@ -324,7 +326,7 @@ class CalendarCore extends Component {
       <div ref={this._ref} style={{
         display: 'inline-block',
         fontSize: 16,
-        boxSizing: "content-box",
+       // boxSizing: "border-box",
         height: '100%',
         width: '100%'
       }}  >
@@ -332,12 +334,14 @@ class CalendarCore extends Component {
           height: this.state.height + this.state.header,
           width: this.state.width,
           justifyContent: 'space-between',
+          //boxSizing: "border-box",
           //fontSize: 20,
           border: '1px solid #e0e0e0',
           margin: 'auto'
         }}
           className="calendar-flex-column">
-          <div style={{ height: this.state.header, width: this.state.width, borderBottom: '1px solid #e0e0e0', alignItems: 'center', textTransform: 'capitalize' }} className="calendar-flex-row">
+          <div style={{ height: this.state.header, width: this.state.width, borderBottom: '1px solid #e0e0e0', alignItems: 'center', textTransform: 'capitalize' }}
+            className="calendar-flex-row">
             {this._selectMonth(calendar)}
           </div>
           <div style={{ height: this.state.height, width: this.state.width, overflow: 'hidden' }} >
