@@ -304,7 +304,6 @@ class CalendarCore extends Component {
       var header = (_height / 8)
       var button = header - 6;
       var bigButton = ((_height - header) / 4) - 6
-      console.log(_height, _width)
       this.setState({
         height: (_height - header),
         header,
