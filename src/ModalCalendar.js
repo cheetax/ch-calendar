@@ -6,10 +6,12 @@ const ClassModal = ({ openModal, isButtonActive }) => ((isButtonActive) && ((ope
 
 const ClassModalOverlay = ({ openModal, isButtonActive }) => ((!isButtonActive) && (openModal ? 'modal-calendar-overlay active' : 'modal-calendar-overlay') || '')
 
+const _onFocus = (event) => event.bubbles && event.preventDefault();
+
 export const ModalCalendar = (props) => {
     const { openModal } = props;
-    console.log(openModal, props.isButtonActive)
-    return <div style={{ height: '100%'}} >
+    //console.log(openModal, props.isButtonActive)
+    return <div >
         {(openModal && !props.isButtonActive) ? <div style={{
             position: 'fixed',
             background: 'black',
@@ -21,8 +23,9 @@ export const ModalCalendar = (props) => {
             zIndex: '999',
         }}
             onClick={props.onClick} /> : null}
-        <div className={ClassModalOverlay({ openModal, isButtonActive: !!props.isButtonActive })} >
-            <div className={ClassModal({ openModal, isButtonActive: !!props.isButtonActive })} >
+        <div className={ClassModalOverlay({ openModal, isButtonActive: !!props.isButtonActive })}
+        >
+            <div className={ClassModal({ openModal, isButtonActive: !!props.isButtonActive })} onMouseDown={_onFocus} onBlur={_onFocus}>
                 <CalendarCore {...props} />
             </div>
         </div>
