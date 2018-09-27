@@ -1,5 +1,5 @@
 
-import { startOfDay, getMonth, getYear, setDay, isToday, getDate, format, setMonth, isThisMonth, isSameDay } from 'date-fns'
+import { startOfDay, getMonth, getYear, setISODay, isToday, getDate, format, setMonth, isThisMonth, isSameDay } from 'date-fns'
 import { locales } from './locales'
 import { Btn } from './Btn'
 import { SvgArrowDown, SvgArrowLeft, SvgArrowRight, SvgCenterFocus } from './Svg'
@@ -41,7 +41,7 @@ class CalendarCore extends Component {
     var date = null;
     for (var week = 0; week <= 5; week++) {
       for (var day = 1; day <= 7; day++) {
-        date = setDay(month, (week * 7) + (day))
+        date = setISODay(month, (week * 7) + (day))
         current = isToday(date)
         monthArray[week][day] = {
           date,
@@ -140,7 +140,7 @@ class CalendarCore extends Component {
   dayweek = () => {
     var dayweek = [];
     for (var i = 0; i <= 6; i++) {
-      dayweek[i] = format(setDay(new Date(), i + 1), 'dd', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] });
+      dayweek[i] = format(setISODay(new Date(), i + 1), 'dd', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] });
     }
     return (
       <div style={{ justifyContent: 'space-between', textTransform: 'capitalize', height: this.state.header }} className='calendar-flex-row' >
@@ -325,7 +325,7 @@ class CalendarCore extends Component {
       <div ref={this._ref} style={{
         display: 'inline-block',
         fontSize: 16,
-       // boxSizing: "border-box",
+        // boxSizing: "border-box",
         height: '100%',
         width: '100%'
       }}  >
