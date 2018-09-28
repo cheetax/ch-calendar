@@ -289,28 +289,30 @@ class CalendarCore extends Component {
   </div>
 
   _ref = (elem) => {
-    let {
-      clientWidth,
-      clientHeight
-    } = elem
-    clientHeight -= 2
-    clientWidth -= 2
-    if (clientHeight > this.state.height + this.state.header) {
-      let _height = (clientWidth * 1.13) > clientHeight ? clientHeight : clientWidth * 1.13
-      let _width = (clientHeight / 1.13) > clientWidth ? clientWidth : clientHeight / 1.13
-      if (_width * 1.13 < _height) {
-        _height = _width * 1.13
+    if (elem) {
+      let {
+        clientWidth,
+        clientHeight
+      } = elem
+      clientHeight -= 2
+      clientWidth -= 2
+      if (clientHeight > this.state.height + this.state.header) {
+        let _height = (clientWidth * 1.13) > clientHeight ? clientHeight : clientWidth * 1.13
+        let _width = (clientHeight / 1.13) > clientWidth ? clientWidth : clientHeight / 1.13
+        if (_width * 1.13 < _height) {
+          _height = _width * 1.13
+        }
+        var header = (_height / 8)
+        var button = header - 6;
+        var bigButton = ((_height - header) / 4) - 6
+        this.setState({
+          height: (_height - header),
+          header,
+          width: (_width),
+          button,
+          bigButton
+        })
       }
-      var header = (_height / 8)
-      var button = header - 6;
-      var bigButton = ((_height - header) / 4) - 6
-      this.setState({
-        height: (_height - header),
-        header,
-        width: (_width),
-        button,
-        bigButton
-      })
     }
   }
 
