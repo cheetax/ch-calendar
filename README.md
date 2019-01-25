@@ -37,6 +37,7 @@ Common props you may want to specify include:
 * `isActive` - [boolean] If 'true' show window
 * `isMonth` - [boolean] If 'true' select a month, else select a day
 * `isClose` - [boolean] If set 'true' close a modal window
+* `isCloseEmptyClick` - [boolean] If set 'true' close a modal window with empty click.
 * `date` - [Date] Date for mark in the calendar. If undefined, will marked today.
 * `onSelect` - [function] The selected date will be passed in the function in the parameter 'date'
 

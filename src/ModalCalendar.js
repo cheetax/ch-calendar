@@ -9,18 +9,19 @@ const ClassModalOverlay = ({ openModal, isButtonActive }) => ((!isButtonActive) 
 const _onFocus = (event) => event.bubbles && event.preventDefault();
 
 export const ModalCalendar = (props) => {
-    const { openModal } = props;
+    const { openModal, style } = props;
     //console.log(openModal, props.isButtonActive)
     return <div >
         {(openModal && !props.isButtonActive) ? <div style={{
             position: 'fixed',
-            background: 'black',
+            backgroundColor: 'black',
             opacity: '0',
             top: '0',
             left: '0',
             width: '100%',
             height: '100%',
             zIndex: '999',
+            ...style
         }}
             onClick={props.onClick} /> : null}
         <div className={ClassModalOverlay({ openModal, isButtonActive: !!props.isButtonActive })}
