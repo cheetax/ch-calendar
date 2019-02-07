@@ -48,7 +48,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <button onClick={() => this.setState({ isActive: true })} >Нажми</button>
+        <button onClick={() => this.setState({ isActive: true })} >Press is active</button>
         <Calendar
           isModal
           style={{backgroundColor: "rgba(0,0,0,0.3)"}}
