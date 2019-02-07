@@ -32,15 +32,18 @@ class Calendar extends Component {
                 }
                 this.props.onSelect && this.props.onSelect(date)
             }}
-            onClick={() => {
-                (this.props.onEmptyClick) && this.props.onEmptyClick();
-                (!this.props.isActive || this.props.isCloseEmptyClick) && this.setState({ openModalCalendar: false });
+            onClick={(event) => {
+                if (event.target == event.currentTarget) {
+                    //event.preventDefault()
+                    (this.props.onEmptyClick) && this.props.onEmptyClick();
+                    (!this.props.isActive || this.props.isCloseEmptyClick) && this.setState({ openModalCalendar: false });
+                }
             }}
         />
-    
+
     _btnCalendarOnClick = () => {
-       // console.log(this.state.elem)
-       // var elem = this.state.elem
+        // console.log(this.state.elem)
+        // var elem = this.state.elem
         //elem && elem.focus()
         this.setState({
             openModalCalendar: !this.state.openModalCalendar
@@ -53,7 +56,7 @@ class Calendar extends Component {
         ><SvgCalendar /></BtnCalendar>}
     </div>
 
-    _ref = (elem) => this.setState({elem})
+    _ref = (elem) => this.setState({ elem })
 
     render() {
         return ((this.props.isModal) ?
