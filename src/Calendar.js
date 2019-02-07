@@ -33,7 +33,8 @@ class Calendar extends Component {
                 this.props.onSelect && this.props.onSelect(date)
             }}
             onClick={() => {
-                (!this.props.isActive || this.props.isCloseEmptyClick) && this.setState({ openModalCalendar: false })
+                (this.props.onEmptyClick) && this.props.onEmptyClick();
+                (!this.props.isActive || this.props.isCloseEmptyClick) && this.setState({ openModalCalendar: false });
             }}
         />
     

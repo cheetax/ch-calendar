@@ -20,11 +20,30 @@ module.exports = {
       {
         test: /\.js$/,
         //include: path.resolve(__dirname, 'src'),
-        exclude: /(node_modules|bower_components|dist)/,
+        exclude: /(node_modules|dist)/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['react', 'es2015', 'stage-2'],
+            presets: [
+              ["@babel/preset-env", { "modules": false }],
+              "@babel/preset-react"
+            ],
+            plugins: [
+              [
+                "@babel/plugin-proposal-decorators",
+                {
+                  "legacy": true
+                }
+              ],
+              //"transform-decorators-legacy",
+              "@babel/plugin-proposal-class-properties",
+
+              ["@babel/plugin-transform-runtime", {
+                "helpers": true,
+                "regenerator": false
+              }],
+              "react-hot-loader/babel"
+            ]
           }
         }
       },
@@ -41,7 +60,7 @@ module.exports = {
           },
           "css-loader"
         ]
-      },      
+      },
     ],
 
   },

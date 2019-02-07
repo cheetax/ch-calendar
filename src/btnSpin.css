@@ -28,7 +28,7 @@ input.btn-spin {
     height: 100%;
     background: transparent;
     z-index: 99;
-    
+    outline: none;
     border: none;
 }
 

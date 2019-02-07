@@ -160,6 +160,7 @@ class CalendarCore extends Component {
   }
 
   _onClick = (date) => {
+    console.log(999)
     this.setState({
       date,
     })

@@ -4,15 +4,14 @@ import './Modal.css'
 
 const ClassModal = ({ openModal, isButtonActive }) => ((isButtonActive) && ((openModal) ? 'modal-calendar-button active' : 'modal-calendar-button') || ((openModal) ? 'modal-calendar-flex active' : 'modal-calendar-flex'))
 
-const ClassModalOverlay = ({ openModal, isButtonActive }) => ((!isButtonActive) && (openModal ? 'modal-calendar-overlay active' : 'modal-calendar-overlay') || '')
+const ClassModalOverlay = ({ openModal, isButtonActive }) => ((!isButtonActive) && (openModal ? 'modal-calendar-overlay active' : 'modal-calendar-overlay') || null)
 
-const _onFocus = (event) => event.bubbles && event.preventDefault();
+const _onFocus = (event) => event.bubbles && event.preventDefault()
 
 export const ModalCalendar = (props) => {
     const { openModal, style } = props;
-    //console.log(openModal, props.isButtonActive)
     return <div >
-        {(openModal && !props.isButtonActive) ? <div style={{
+        {/* {(openModal && !props.isButtonActive) ? <div style={{
             position: 'fixed',
             backgroundColor: 'black',
             opacity: '0',
@@ -22,11 +21,13 @@ export const ModalCalendar = (props) => {
             height: '100%',
             zIndex: '999',
             ...style
-        }}
-            onClick={props.onClick} /> : null}
+        }}/> : null} */}
         <div className={ClassModalOverlay({ openModal, isButtonActive: !!props.isButtonActive })}
-        >
-            <div className={ClassModal({ openModal, isButtonActive: !!props.isButtonActive })} onMouseDown={_onFocus} onBlur={_onFocus}>
+            style={{ ...style }}
+            onClick={props.onClick}>
+            <div className={ClassModal({ openModal, isButtonActive: !!props.isButtonActive })}
+                onMouseDown={_onFocus}
+                onBlur={_onFocus}>
                 <CalendarCore {...props} />
             </div>
         </div>

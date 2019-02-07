@@ -151,13 +151,64 @@ a.btn-select {
     position: fixed;
     display: flex;
     justify-content: center;
-    align-items: center;    
-    transform: scale(0);
+    align-items: center;  
+    background-color: rgba(0, 0, 0, 0);
     opacity: 0;
     height: 100%;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 999;
-    transition: 0.5s;
+    transition: all 0.5s, background-color 0s;
+}
+.btn-spin:not(input):hover {
+    cursor: pointer;
+    border: 2px solid #adb0b2; 
+}
+/* .btn-spin.hover {
+    cursor: pointer;
+    border: 2px solid #4caf50; 
+
+} */
+
+.btn-spin:not(input):active {
+    /* border: 2px solid red; */
+    background: #adb0b2;
+}
+
+a.btn-spin {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+}
+input.btn-spin {
+    cursor: pointer;  
+    user-select: none;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 99;
+    outline: none;
+    border: none;
+}
+
+div.btn-spin {
+    cursor: pointer;        
+    height: 32px;
+    width: 32px;
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+    position: relative;
+    background: transparent;
+    border: 2px solid transparent;    
+    z-index: 99;
+    margin: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -40,4 +40,5 @@ Common props you may want to specify include:
 * `isCloseEmptyClick` - [boolean] If set 'true' close a modal window with empty click.
 * `date` - [Date] Date for mark in the calendar. If undefined, will marked today.
 * `onSelect` - [function] The selected date will be passed in the function in the parameter 'date'
+* `onEmptyClick` - [function] Call of if empty click.
 
