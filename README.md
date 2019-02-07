@@ -6,6 +6,7 @@
 ```npm install сh-calendar --save```
 
 # Use
+Modal and Button active:
 ```js
 import { Calendar } from 'ch-calendar'
 import React, { Component } from 'react';
@@ -26,6 +27,44 @@ class App extends Component {
     );
   }
 }
+export default App;
+```
+
+Modal and active use code:
+```js
+import React, { Component } from 'react';
+import { Calendar } from 'ch-calendar'
+import 'ch-calendar/dist/ch-calendar.css'
+import './App.css';
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      date: new Date(),
+      isActive: false
+    }
+  }
+  render() {
+    return (
+      <div className="App">
+        <button onClick={() => this.setState({ isActive: true })} >Нажми</button>
+        <Calendar
+          isModal
+          style={{backgroundColor: "rgba(0,0,0,0.3)"}}
+          isActive={this.state.isActive}
+          isCloseEmptyClick
+          onEmptyClick={() => this.setState({ isActive: false })}
+          date={this.state.date}
+          onSelect={(date) => {
+            console.log(date)
+            this.setState({ isActive: false, date })
+          }} />
+      </div>
+    );
+  }
+}
+
 export default App;
 ```
 ## Props
